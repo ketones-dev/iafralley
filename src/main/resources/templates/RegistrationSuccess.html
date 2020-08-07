@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="ISO-8859-1">
+<title>Registration Success</title>
+</head>
+<body>
+Thank u for Registring a email has been sent to your registered mail id you can preview and download detail also
+<p th:text="'id: ' + ${candidateDetails.name}" />
+    <p th:text="'content: ' + ${candidateDetails.fathername}" />
+    <p th:text="'content: ' + ${candidateDetails.emailid}" />
+    <p th:text="'content: ' + ${candidateDetails.ralleyregistrationNo}" />
+    
+<!-- <a th:href="@{'/pdf/fileName=HelloWorld'">Download</a> -->
+ <a th:href="@{/pdf(fileName=${candidateDetails.ralleyregistrationNo})}"> Download 2</a>  
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+	<title>IAF-Ralley Dashboard</title>
+</head>
+
+<body>
+
+	<h2>Welcome to Dashboard</h2>
+
+	<!-- display user name and role -->
+	
+	<div>
+		User: <span sec:authentication="name"></span>
+		<br><br>
+		Role(s): <span sec:authentication="principal.authorities"></span>
+		<br><br>
+
+		<!-- Check for login error -->																	
+		<div th:if="${session.user}" >
+			<p th:text="'First name: ' + ${session.user.firstName} + ', Last name: ' + ${session.user.lastName} + ', Email: ' + ${session.user.email}"></p>
+		</div>		
+	</div>
+	<hr>
+	
+	<a th:href="@{/ShowRalleyDetails}">Create Ralley</a>
+	<a th:href="@{/ShowRegisterdStudentData}">ShowRegisterdStudentData</a>
+	
+	
+	<!-- Add a logout button -->
+	<form th:action="@{/logout}" 
+			   method="POST">
+	
+		<input type="submit" value="Logout" />
+	
+	</form>	
+	
+</body>
+
+</html>
