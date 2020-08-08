@@ -6,7 +6,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cdac.iafralley.Dao.RalleyDaywiseSlotDetailsDAO;
 import com.cdac.iafralley.Dao.RalleyDetailsDAO;
+import com.cdac.iafralley.entity.RalleyDaywiseSlotDetails;
 import com.cdac.iafralley.entity.RalleyDetails;
 
 @Service
@@ -14,6 +16,9 @@ public class RalleyDetailsService {
 	
 	@Autowired
 	RalleyDetailsDAO ralleydetaildao;
+	
+	@Autowired
+	RalleyDaywiseSlotDetailsDAO ralleyslotdetailsdao;
 	
 	public RalleyDetails findById(Long id)
 	{
@@ -24,6 +29,13 @@ public class RalleyDetailsService {
 			rs=ralleyDetail.get();
 		}
 		return rs;
+		
+	}
+	
+	public List<RalleyDaywiseSlotDetails> getAllSlot(RalleyDetails rd){
+		List<RalleyDaywiseSlotDetails> rds=ralleyslotdetailsdao.findByRalleydetails(rd);
+		
+		return rds;
 		
 	}
 	

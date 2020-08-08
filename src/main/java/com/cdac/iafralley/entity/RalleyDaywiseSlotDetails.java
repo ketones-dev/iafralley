@@ -51,7 +51,7 @@ public class RalleyDaywiseSlotDetails {
 	}
 
 	public RalleyDaywiseSlotDetails(@NotNull Long no_of_intake, @NotNull Date day_date,
-			@NotNull String time_of_reporting) {
+			@NotNull @NotNull @NotNull String time_of_reporting) {
 		super();
 		this.no_of_intake = no_of_intake;
 		this.day_date = day_date;
@@ -88,7 +88,7 @@ public class RalleyDaywiseSlotDetails {
 		return time_of_reporting;
 	}
 
-	public void setTime_of_reporting(String time_of_reporting) {
+	public void setTime_of_reporting(@NotNull @NotNull String time_of_reporting) {
 		this.time_of_reporting = time_of_reporting;
 	}
 
