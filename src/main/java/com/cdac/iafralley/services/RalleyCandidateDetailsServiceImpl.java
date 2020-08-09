@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import com.cdac.iafralley.Dao.RalleyCandidateDetailsDAO;
 import com.cdac.iafralley.Dao.RalleyCitiesDAO;
+import com.cdac.iafralley.Dao.RalleyDetailsDAO;
 import com.cdac.iafralley.Dao.RalleyStateDAO;
 import com.cdac.iafralley.controllers.RalleyRegistrationFormController;
 import com.cdac.iafralley.entity.RalleyCandidateDetails;
@@ -40,6 +41,9 @@ public class RalleyCandidateDetailsServiceImpl implements RalleyCandidateDetails
 	
 	@Autowired
 	private RalleyIdGenrator ralleyIdGenrator;
+	
+	@Autowired
+	private RalleyDetailsDAO ralleyDetailsRepo;
 
 	@Override
 	public List<RalleyCandidateDetails> findAll() {
@@ -151,6 +155,23 @@ public class RalleyCandidateDetailsServiceImpl implements RalleyCandidateDetails
 		names.put("cityname",cityname.getCity());
 		
 		return names;
+	}
+
+	@Override
+	public List<RalleyCities> getallCitesByStateAdminAlloted(Long stateid) {
+		// TODO Auto-generated method stub
+		List<Long> allocatecities= ralleyDetailsRepo.findDistinctAllotCities(stateid);
+		List<RalleyCities> c=conductingCities.getAllotCities(allocatecities);
+		
+		return c;
+	}
+
+	@Override
+	public List<RalleyStates> getralleyAllState() {
+		// TODO Auto-generated method stub
+		List<Long> allocatestates= ralleyDetailsRepo.findDistinctAllotStates();
+		List<RalleyStates> s=conductingStates.getallStateonBasisOfList(allocatestates);
+		return s;
 	}
 
 	

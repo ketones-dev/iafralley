@@ -1,24 +1,39 @@
 package com.cdac.iafralley.services;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cdac.iafralley.Dao.RalleyCitiesDAO;
 import com.cdac.iafralley.Dao.RalleyDaywiseSlotDetailsDAO;
 import com.cdac.iafralley.Dao.RalleyDetailsDAO;
+import com.cdac.iafralley.Dao.RalleyStateDAO;
+import com.cdac.iafralley.entity.RalleyCities;
 import com.cdac.iafralley.entity.RalleyDaywiseSlotDetails;
 import com.cdac.iafralley.entity.RalleyDetails;
+import com.cdac.iafralley.entity.RalleyStates;
 
 @Service
 public class RalleyDetailsService {
+	
+	private static final Logger logger = LoggerFactory.getLogger(RalleyDetailsService.class);
 	
 	@Autowired
 	RalleyDetailsDAO ralleydetaildao;
 	
 	@Autowired
 	RalleyDaywiseSlotDetailsDAO ralleyslotdetailsdao;
+	
+	@Autowired
+	private RalleyCitiesDAO conductingCities; 
+	
+	@Autowired
+	private RalleyStateDAO conductingStates; 
 	
 	public RalleyDetails findById(Long id)
 	{
@@ -59,4 +74,32 @@ public class RalleyDetailsService {
 	ralleydetaildao.delete(ralleyDetails);
 	}
 
+	
+	public List<RalleyStates> getallState() {
+		// TODO Auto-generated method stub
+		List<RalleyStates> ralleystates=conductingStates.findAll();
+		if(ralleystates == null)
+		{
+			ralleystates=Collections.emptyList();
+			logger.warn("No states entries in database....");
+		}
+		logger.info("showing all conducting ralley states:"+ralleystates.toString());
+		return ralleystates;
+	}
+
+	
+	public List<RalleyCities> getallCitesByState(Long stateid) {
+		// TODO Auto-generated method stub
+		List<RalleyCities> ralleycities=conductingCities.getallCities(stateid);
+		if(ralleycities == null)
+		{
+			
+			logger.warn("No cities entries in database....");
+		}
+		logger.info("showing all conducting ralley cities:"+ralleycities.toString());
+		return ralleycities;
+		
+		
+		
+	}
 }

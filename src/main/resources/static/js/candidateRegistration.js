@@ -8,43 +8,78 @@ const http = new easyHTTP;
 
 //getting fields
 
+let ralley_stateSelectedValue = document.getElementById("ralleystateSelect");
+let ralley_citySelectedValue = document.getElementById("ralleycitySelect");
+
 let stateSelectedValue = document.getElementById("stateSelect");
 let citySelectedValue = document.getElementById("citySelect");
 
-
- 
- 
-stateSelectedValue.addEventListener("change", function() {
+ralley_stateSelectedValue.addEventListener("change", function(e) {
 	 console.log(this);
-	 let data = stateSelectedValue.options[stateSelectedValue.selectedIndex].value;
+	 let data = ralley_stateSelectedValue.options[ralley_stateSelectedValue.selectedIndex].value;
 	    if(data.text !== "0")
 	    {
-	        addActivityItem(data);
+	        addActivityItem(data,e.target.id);
 	    }
 	    //console.log(activities.value);
 	});
  
- function addActivityItem(data){
-	 console.log(data);
-	 
-	// Create Post
-	 
-	 http.post('getCitiesonbasisofStateSeclected', {stateid : data} , function(err, post) {
-	  if(err) {
-	    console.log(err);
-	  } else {
-	    console.log(post);
-	    let cities=JSON.parse(post);
-	    createCitydropdownData(cities);
-	  }
-	 });
+ 
+stateSelectedValue.addEventListener("change", function(e) {
+	 console.log(this);
+	 let data = stateSelectedValue.options[stateSelectedValue.selectedIndex].value;
+	    if(data.text !== "0")
+	    {
+	        addActivityItem(data,e.target.id);
+	    }
+	    //console.log(activities.value);
+	});
+ 
+ function addActivityItem(data,id){
+	 if(id === "stateSelect"){
+		 
+		 console.log(data);
+		 
+			// Create Post
+			 
+			 http.post('getCitiesonbasisofStateSeclected', {stateid : data} , function(err, post) {
+			  if(err) {
+			    console.log(err);
+			  } else {
+			    console.log(post);
+			    let cities=JSON.parse(post);
+			    createCitydropdownData(cities,id);
+			  }
+			 });
 
-	 
+			 
+		 
+	 }
+	 else{
+		 
+		 console.log(data);
+		 
+			// Create Post
+			 
+			 http.post('getralleyallotCitiesonbasisofStateSeclected', {stateid : data} , function(err, post) {
+			  if(err) {
+			    console.log(err);
+			  } else {
+			    console.log(post);
+			    let cities=JSON.parse(post);
+			    createCitydropdownData(cities,id);
+			  }
+			 });
+		 
+	 }
+	
  }
  
-function createCitydropdownData(citiesArrays)  {
+ 
+ 
+function createCitydropdownData(citiesArrays,id)  {
 	//console.log(JSON.parse(citiesArrays).length);
-	removecitiesExcetFirstOption(citiesArrays);
+	removecitiesExcetFirstOption(citiesArrays,id);
 	//Add the Options to the DropDownList.
     for (var i = 0; i < citiesArrays.length; i++) {
         var option = document.createElement("option");
@@ -54,17 +89,31 @@ function createCitydropdownData(citiesArrays)  {
 
         //Set CustomerId in Value part.
         option.value = citiesArrays[i].city_id;
-
+        if(id === "stateSelect")
+        	{
         //Add the Option element to DropDownList.
         citySelectedValue.appendChild(option);
+        	}
+        else{
+        	ralley_citySelectedValue.appendChild(option);
+        }
     }
 }
 	
-function removecitiesExcetFirstOption(citiesArrays){
+function removecitiesExcetFirstOption(citiesArrays,id){
 	
-	var i, L = citySelectedValue.length;
+	var i;var L;
+	if (id === "stateSelect") {
+		L = citySelectedValue.length;
+	} else {
+		L = ralley_citySelectedValue.length;
+	}
 	   for(i = L; i > 0; i--) {
-		   citySelectedValue.remove(i);
+		   if(id === "stateSelect")
+			   {citySelectedValue.remove(i);}
+		   else
+			   {ralley_citySelectedValue.remove(i)}
+		   
 	   }
 	   
 	  // citySelectedValue.append("<option value='0'>---Select City----</option>");

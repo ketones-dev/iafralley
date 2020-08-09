@@ -1,23 +1,24 @@
 package com.cdac.iafralley.entity;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.persistence.*;
-import javax.validation.constraints.AssertFalse;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 
-import org.hibernate.annotations.Parameter;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.cdac.iafralley.user.validation.ValidEmail;
-
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.GenericGenerator;
 
 
 @Entity
@@ -92,6 +93,16 @@ public class RalleyCandidateDetails implements Serializable {
 	@Column(name="state")
 	private String state;
 	
+	@NotNull
+	@Column(name="opt_city")
+	private Long opt_city;
+	
+	@NotNull
+	@Column(name="opt_state")
+	private Long opt_state;
+	
+	
+	
 	
 	@Column(name = "Datetime_reporting")
 	@Temporal(TemporalType.TIMESTAMP)
@@ -120,9 +131,15 @@ public class RalleyCandidateDetails implements Serializable {
 		// TODO Auto-generated constructor stub
 	}	
 
-	public RalleyCandidateDetails(String name, String fathername, String emailid, Date dateOfBirth, String contactno,
-			String passed_exam_detail, Integer passed_exam_percentage, Integer english_percentage,
-			boolean maritial_status, String height, String city, String state, Date dateTimeOfReporting) {
+	
+
+	public RalleyCandidateDetails(@NotBlank(message = "is required") String name,
+			@NotBlank(message = "is required") String fathername, String emailid, Date dateOfBirth,
+			@NotEmpty String contactno, @NotEmpty String passed_exam_detail,
+			@NotNull(message = "is required") String otherDetailPassedDetail, @NotNull Integer passed_exam_percentage,
+			@NotNull Integer english_percentage, boolean maritial_status, @NotEmpty String height,
+			@NotEmpty String city, @NotEmpty String state, @NotEmpty @NotEmpty Long opt_city, @NotEmpty Long opt_state,
+			Date dateTimeOfReporting, Date subscirbed_on, String ralleyregistrationNo) {
 		super();
 		this.name = name;
 		this.fathername = fathername;
@@ -130,14 +147,21 @@ public class RalleyCandidateDetails implements Serializable {
 		this.dateOfBirth = dateOfBirth;
 		this.contactno = contactno;
 		this.passed_exam_detail = passed_exam_detail;
+		this.otherDetailPassedDetail = otherDetailPassedDetail;
 		this.passed_exam_percentage = passed_exam_percentage;
 		this.english_percentage = english_percentage;
 		this.maritial_status = maritial_status;
 		this.height = height;
 		this.city = city;
 		this.state = state;
+		this.opt_city = opt_city;
+		this.opt_state = opt_state;
 		this.dateTimeOfReporting = dateTimeOfReporting;
+		this.subscirbed_on = subscirbed_on;
+		this.ralleyregistrationNo = ralleyregistrationNo;
 	}
+
+
 
 	public Long getId() {
 		return id;
@@ -285,6 +309,36 @@ public class RalleyCandidateDetails implements Serializable {
 	public void setOtherDetailPassedDetail(String otherDetailPassedDetail) {
 		this.otherDetailPassedDetail = otherDetailPassedDetail;
 	}
+	
+	
+
+	
+
+
+
+	public Long getOpt_city() {
+		return opt_city;
+	}
+
+
+
+	public void setOpt_city(Long opt_city) {
+		this.opt_city = opt_city;
+	}
+
+
+
+	public Long getOpt_state() {
+		return opt_state;
+	}
+
+
+
+	public void setOpt_state(Long opt_state) {
+		this.opt_state = opt_state;
+	}
+
+
 
 	@Override
 	public String toString() {
@@ -293,10 +347,13 @@ public class RalleyCandidateDetails implements Serializable {
 				+ passed_exam_detail + ", otherDetailPassedDetail=" + otherDetailPassedDetail
 				+ ", passed_exam_percentage=" + passed_exam_percentage + ", english_percentage=" + english_percentage
 				+ ", maritial_status=" + maritial_status + ", height=" + height + ", city=" + city + ", state=" + state
-				+ ", dateTimeOfReporting=" + dateTimeOfReporting + ", subscirbed_on=" + subscirbed_on
-				+ ", ralleyregistrationNo=" + ralleyregistrationNo + "]";
+				+ ", opt_city=" + opt_city + ", opt_state=" + opt_state + ", dateTimeOfReporting=" + dateTimeOfReporting
+				+ ", subscirbed_on=" + subscirbed_on + ", ralleyregistrationNo=" + ralleyregistrationNo + "]";
 	}
 
+
+
+	
 	
 
 	

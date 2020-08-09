@@ -67,6 +67,7 @@ public class AdminController {
 		
 		mv.addObject("ralleyDetails", rd);
 		mv.addObject("slotlist", rd.getRalleydaywiseSlot());
+		mv.addObject("allStates", rdservice.getallState());
 		return mv;
 		
 	}

@@ -1,9 +1,77 @@
 /**
  * Create ralley slotwise logic
  */
+const http = new easyHTTP;
 
+//getting fields
+
+let stateSelectedValue = document.getElementById("stateSelect");
+let citySelectedValue = document.getElementById("citySelect");
 let start_date=document.getElementById("start_date");
 let end_date=document.getElementById("end_date");
+
+stateSelectedValue.addEventListener("change", function() {
+	 console.log(this);
+	 let data = stateSelectedValue.options[stateSelectedValue.selectedIndex].value;
+	    if(data.text !== "0")
+	    {
+	        addActivityItem(data);
+	    }
+	    //console.log(activities.value);
+	});
+
+function addActivityItem(data){
+	 console.log(data);
+	 
+	// Create Post
+	 
+	 http.post('getCitiesonbasisofStateSeclected', {stateid : data} , function(err, post) {
+	  if(err) {
+	    console.log(err);
+	  } else {
+	    console.log(post);
+	    let cities=JSON.parse(post);
+	    createCitydropdownData(cities);
+	  }
+	 });
+
+	 
+}
+
+function createCitydropdownData(citiesArrays)  {
+	//console.log(JSON.parse(citiesArrays).length);
+	removecitiesExcetFirstOption(citiesArrays);
+	//Add the Options to the DropDownList.
+   for (var i = 0; i < citiesArrays.length; i++) {
+       var option = document.createElement("option");
+       console.log(citiesArrays[i].city_id);
+       //Set Customer Name in Text part.
+       option.text = citiesArrays[i].city;
+
+       //Set CustomerId in Value part.
+       option.value = citiesArrays[i].city_id;
+
+       //Add the Option element to DropDownList.
+       citySelectedValue.appendChild(option);
+   }
+}
+	
+function removecitiesExcetFirstOption(citiesArrays){
+	
+	var i, L = citySelectedValue.length;
+	   for(i = L; i > 0; i--) {
+		   citySelectedValue.remove(i);
+	   }
+	   
+	  // citySelectedValue.append("<option value='0'>---Select City----</option>");
+	
+}
+
+
+
+
+
+
 
 end_date.addEventListener("input",function(){
 	if(end_date.value === "")
@@ -30,18 +98,28 @@ end_date.addEventListener("input",function(){
 
 	const diffDays = Math.round(Math.abs((firstDate - secondDate) / oneDay));
 	console.log(diffDays);
-	addRow(diffDays)
+	addRow(diffDays,start_jsdate)
 	
 	
 	
 	//callCreateSlotForm(start_jsdate,end_jsdate,diffDays);
 });
 
- function addRow(diffdays) {
+
+
+
+
+
+
+ function addRow(diffdays,start_date) {
     let listName = 'ralleydaywiseSlot'; //list name in Ralleydetails.class
     let fieldsNames = ['day_date', 'time_of_reporting', 'no_of_intake']; //field names from ralleydaywiseSlot.class
-   
-for(var i=0;i<=diffdays;i++){
+    let clear=document.getElementById("table-slot1");
+	clear.innerHTML = "";
+	
+	callCreateSlotForm();
+	
+	for(var i=0;i<=diffdays;i++){
     let row = document.createElement('tr');
     row.classList.add('row', 'item');
 
@@ -52,7 +130,13 @@ for(var i=0;i<=diffdays;i++){
 let input = document.createElement('input');
        
     if(fieldName === 'day_date')
-    { input.type = 'date';}
+    { 
+    	input.type = 'date';
+    	let newstartdate=new Date();
+    	let date=new Date(newstartdate.setDate(start_date.getDate()+i));
+    
+    	input.value = formatDateToString(date) ;
+    }
      else if(fieldName === 'time_of_reporting')
 	{ input.type = 'time';}
 	else if(fieldName === 'no_of_intake')
@@ -66,39 +150,43 @@ let input = document.createElement('input');
         row.appendChild(col);
     });
 
-
+    
+   // console.log(start_date.setDate(start_date.getDate()+1));
+    
     document.getElementById('table-slot1').appendChild(row);
 }
 }
 
-function callCreateSlotForm(start_date,end_date,diffDays)
+function callCreateSlotForm()
 {
-	let clear=document.getElementById("table-slot1");
-	clear.innerHTML = "";
+	
 	//create element no basis of days
-	let table=document.createElement("table");
-	let d=["Days","Time-of-reporting","Slots","intake count"];
-	generateTableHead(table,d);
-	generateTable(table,diffDays,start_date);
-	let a=document.getElementById("table-slot1");
-	table.setAttribute("class","table table-striped table-responsive-md")
-	a.append(table);
+	
+	let d=["Days","Time-of-reporting","intake count"];
+	generateTableHead(d);
+	//generateTable(table,diffDays,start_date);
+	
 	
 	
 	}
 
-function generateTableHead(table, data) {
-	  let thead = table.createTHead();
-	  let row = thead.insertRow();
+function generateTableHead(data) {
+let a=document.getElementById("table-slot1");
+	
+	
+	  let row = document.createElement('tr');
+	  row.classList.add("row" ,"item");
 	  for (let key of data) {
-	    let th = document.createElement("th");
+	    let td = document.createElement("td");
+	    td.classList.add("col","form-group");
 	    let text = document.createTextNode(key);
-	    th.appendChild(text);
-	    row.appendChild(th);
+	    td.appendChild(text);
+	    row.appendChild(td);
 	  }
+	  a.append(row);
 	}
 
-function generateTable(table, data,start_date) {
+/*function generateTable(table, data,start_date) {
 	let newstartdate=new Date();
 	//let genrateblock=document.createElement("th:block");
 	//genrateblock.setAttribute("th:each","ralley : ${ralleyDetails.ralleydaywiseSlot}");
@@ -148,7 +236,7 @@ function generateTable(table, data,start_date) {
 	      
 	    
 	  }
-	}
+	}*/
 
 function formatDateToString(date){
 	   // 01, 02, 03, ... 29, 30, 31

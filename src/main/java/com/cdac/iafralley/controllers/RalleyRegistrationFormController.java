@@ -62,6 +62,9 @@ public class RalleyRegistrationFormController {
 	@Autowired
 	RalleyCandidateDetailsService candidateService;
 	
+	
+	
+	
 	@Value("${config.mailserver}")
     private String mailserver;
  
@@ -112,6 +115,7 @@ public class RalleyRegistrationFormController {
 		 if (!model.containsAttribute("ralleyCandidateDetails")) {
 	        	modelAndView.addObject("ralleyCandidateDetails", new RalleyCandidateDetails());
 	        	modelAndView.addObject("allStates", candidateService.getallState());
+	        	modelAndView.addObject("ralleyAllState", candidateService.getralleyAllState());
 	        }
 		
 		 
@@ -201,6 +205,19 @@ public class RalleyRegistrationFormController {
 		
 		System.out.println("in getcities"+stateid.get("stateid"));
 	   List<RalleyCities> entityList = candidateService.getallCitesByState(stateid.get("stateid"));
+		//List<RalleyCities> entityList=Collections.EMPTY_LIST;
+	    
+	   
+	    return new ResponseEntity<List<RalleyCities>>(entityList, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/getralleyallotCitiesonbasisofStateSeclected", method=RequestMethod.POST, produces=MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public  ResponseEntity<List<RalleyCities>> getRalleyAllotcitiesByAdmin(@RequestBody Map<String, Long>  stateid) {
+		
+		System.out.println("in getcities"+stateid.get("stateid"));
+	   List<RalleyCities> entityList = candidateService.getallCitesByStateAdminAlloted(stateid.get("stateid"));
+	   
 		//List<RalleyCities> entityList=Collections.EMPTY_LIST;
 	    
 	   
