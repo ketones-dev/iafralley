@@ -151,13 +151,20 @@ public class RalleyRegistrationFormController {
 			  modelAndView.setViewName("redirect:/showRegistrationForm");
 			  redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.ralleyCandidateDetails", result);
 			  redirectAttributes.addFlashAttribute("ralleyCandidateDetails", ralleyCandidateDetails);
+			  redirectAttributes.addFlashAttribute("error", "error");
+			  
+			  redirectAttributes.addFlashAttribute("optcity",ralleyCandidateDetails.getOpt_city());
 			 // modelAndView.addObject("ralleyCandidateDetails", ralleyCandidateDetails);
 			 // modelAndView.addObject("allStates", candidateService.getallState());
 			  redirectAttributes.addFlashAttribute("allStates", candidateService.getallState());
+			  redirectAttributes.addFlashAttribute("ralleyAllState", candidateService.getralleyAllState());;
 			 
 			 
 			return modelAndView;
 		}
+		
+		
+		
 		
 		
 		  try { RalleyCandidateDetails
@@ -222,6 +229,19 @@ public class RalleyRegistrationFormController {
 	    
 	   
 	    return new ResponseEntity<List<RalleyCities>>(entityList, HttpStatus.OK);
+	}
+
+	@RequestMapping(value="/getralleyFormOnBasisOfAdminCities", method=RequestMethod.POST, produces=MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public  ResponseEntity<Boolean> getralleyFormOnBasisOfAdminCities(@RequestBody Map<String, Long>  cityid) {
+		
+		System.out.println("in getcities"+cityid.get("cityid"));
+	   Boolean entityList=candidateService.getregisteredCount(cityid.get("cityid"));
+	  // Boolean entityList=false;
+		//List<RalleyCities> entityList=Collections.EMPTY_LIST;
+	    
+	   
+	    return new ResponseEntity<Boolean>(entityList, HttpStatus.OK);
 	}
 
 	

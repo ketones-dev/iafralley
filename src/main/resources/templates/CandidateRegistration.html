@@ -13,14 +13,32 @@
 	href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
 
 <title>Create New Product</title>
+<style>
+.form-table{
+
+display:none;
+
+
+}
+.message{
+display:none;
+}
+
+.show{
+display:inline-block;
+}
+
+</style>
 
 </head>
 <body>
-	<div align="center">
+	<div align="center" >
 		<h1>Ralley Registration Form</h1>
 		<br />
 		<form action="#" th:action="@{/registerCandidate}"
 			th:object="${ralleyCandidateDetails}" method="post">
+			<input type="hidden" th:value="${error}" id="error">
+			<input type="hidden" th:value="${optcity}" id="optcity">
 			<table border="1" cellpadding="3">
 			<tr>
 					<td>State</td>
@@ -43,9 +61,9 @@
 				</tr>
 			
 			</table>
+			<div id="message" class="message"></div>
 
-
-			<table border="1" cellpadding="3">
+			<table border="1" cellpadding="3" id="form-table" class="form-table">
 				<tr>
 					<td>Candidate Full Name:</td>
 					<td><input type="text" th:field="*{name}" /></td>
@@ -155,5 +173,8 @@
 	</div>
 	<script type="text/javascript" th:src="@{/js/easyhttp.js}"></script>
 	<script type="text/javascript" th:src="@{/js/candidateRegistration.js}"></script>
+	<script>
+	
+	</script>
 </body>
 </html>

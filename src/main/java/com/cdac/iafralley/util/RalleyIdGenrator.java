@@ -16,14 +16,15 @@ public class RalleyIdGenrator implements RalleyIdGenratorInterface{
 	@Autowired
 	RalleyCandidateDetailsDAO ralleyCandidateDetailsDAO;
 	
-	private String prefix_venu="RR";
+	
 	private String year_cycle="20";
 	private String asc_value="15ASC";
 
 	//add param as of candidate pref city for ralley and check if count for such city is there if 0 then send error message
 	@Override
-	public String RalleyRegistrationNumGenrator() {
+	public String RalleyRegistrationNumGenrator(String preFixValue) {
 		String regno=null;
+		String prefix_venu=preFixValue;
 		//get count of value
 		String count=ralleyCandidateDetailsDAO.maxCount();
 		
@@ -50,6 +51,8 @@ public class RalleyIdGenrator implements RalleyIdGenratorInterface{
 	    while (output.length() < digits) output = "0" + output;
 	    return output;
 	}
+	
+	
 	
 
 }

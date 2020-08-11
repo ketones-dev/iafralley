@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import com.cdac.iafralley.entity.RalleyCandidateDetails;
 import com.cdac.iafralley.entity.RalleyDetails;
 
 @Repository
@@ -21,8 +22,8 @@ public interface RalleyDetailsDAO extends JpaRepository<RalleyDetails, Long> {
 	@Query("select distinct r.city_id from RalleyDetails r where r.state_id = :stateid")
 	public List<Long> findDistinctAllotCities(@Param("stateid") Long stateid);
 	
-	
-	
+	@Query("select r.ralley_id from RalleyDetails r where r.city_id= :cityid")
+	public List<Long> getRalleyByCitySelected(@Param("cityid") Long cityid);
 	
 
 }

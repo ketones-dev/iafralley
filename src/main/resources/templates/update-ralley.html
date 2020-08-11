@@ -1,10 +1,337 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CASB-Contact</title>
+
+<!-- off-canvas -->
+
+<!-- font-awesome -->
+<link th:href="@{/vendor/css/font-awesome.min.css}" rel="stylesheet">
+<!-- 
+<link th:href="/fonts/flaticon/flaticon.css" rel="stylesheet"> -->
+<!-- Bootstrap -->
+<link rel="stylesheet" th:href="@{/vendor/css/bootstrap.min.css}">
+<!-- Style CSS -->
+<link th:href="@{/css/style.css}" rel="stylesheet">
+<link rel="stylesheet" th:href="@{/css/w3.css}">
+<link rel="stylesheet" th:href="@{/css/customcss.css}" type="text/css">
+
+<!--
+         Favicons
+         =============================================
+         -->
+<link rel="icon" type="image/png" sizes="16x16"
+	href="resources/img/favicons/iaf-logo.png">
+	<style>
+hr {
+	border-top: 1px solid #7c7171;
+}
+
+
+
+.card {
+	background-color: white;
+	width: 85%;
+	margin: 0 auto;
+	border-radius: 9px;
+}
+
+#ralleyform {
+	background-color: #5b6e74;
+}
+
+#headingtitle {
+	font-size: 25px;
+	color: white;
+	font-weight: bold;
+	text-shadow: -1px 1px 0px #69768c, -2px 2px 0px #555151, -3px 3px 0px
+		#434242;
+		
+}
+</style>
+
 </head>
 <body>
+<div id="main-wrapper" class="uc-offcanvas-wrapper uc-offcanvas-left slide-along">
+<div class="">
 
+			<div class="content-wrapper">
+				<!-- Header Top -->
+				<div class="header-top visible-md visible-lg">
+					<div class="container">
+						<div class="row">
+							<div class="col-sm-12 col-md-6">
+								<span id="ct"
+									style="color: white; font-size: 11px; float: left; width: 100%; height: auto; display: inline-block; padding-top: 2px;"></span>
+
+							</div>
+
+							<div class="col-sm-12 col-md-6">
+								<ul class="top-contact pull-right">
+									<li class="phone"><i class="fa fa-phone-square"
+										aria-hidden="true"></i> 011-2569-9606/4209</li>
+									<li class="email"><i class="fa fa-envelope"
+										aria-hidden="true"></i> <img style="padding-bottom: 4px;" alt="" th:src="@{/image/email/headercasb.PNG}"> </li>
+
+
+									<!-- <li class="get-a-quote"><a href="#" title="">TEXT</a></li> -->
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+
+<div id="iafname" class="container-fluid  visible-lg visible-md" style=" background: linear-gradient(#c8e5ff, #ffffff);">
+					<div class="row">
+					<div class="col-sm-8 col-md-8 ">
+						<div class="navbar-header left-align left-padding" style="clear: both;">
+							<a class="logo pull-left" href="index.html"><img
+								th:src="@{/vendor/image/logo/casblg.png}" style="height: 65px; margin-top: 5px;"></a>
+							<span class="name pull-left">
+								<h4 class="txt" style="color:#022261;text-weight: bold; margin-left: 15px; margin-top: 5px;font-weight: 700;">CENTRAL
+									AIRMEN SELECTION BOARD</h4>
+							</span> <br> <span class="name pull-left">
+								<h4 class="txt" style="color:#022261;text-weight: bold; margin-left: 15px; margin-top: 5px;font-weight: 700;">केन्द्रीय वायु सैनिक चयन बोर्ड</h4>
+							</span>
+						</div>
+					</div>
+					<!-- 	<div class="col-sm-2 col-md-2"></div> -->
+					<div class="col-sm-4 col-md-4 ">
+						<div class="navbar-header right-align" style="margin-left: 0px;">
+							<div>
+								<a class="logo pull-right" href="http://www.careerindianairforce.cdac.in"><img th:src="@{/vendor/image/iafanimatelogo.gif}"
+									style="height: 61px; margin-top: 5px;"></a> <span
+									class="name pull-right">
+									<h4 class="txt"
+										style="color:  #022261   ;text-weight: bold; margin-right: 15px; margin-top: 5px;font-weight: 700;">INDIAN
+										AIR FORCE</h4>
+								</span> <br> <span class="name pull-right">
+									<h4 class="txt"
+										style="color: #022261  ;text-weight: bold; margin-right: 15px; margin-top: 5px;font-weight: 700;">भारतीय
+										वायु सेना     </h4>
+								</span>
+							</div>
+						</div>
+					</div>
+					</div>	
+				</div>
+				
+				<!-- .navbar-top -->
+				
+				<!-- .nav -->
+				<section>
+				<section id="ralleyform">
+					<div class="container">
+						<div class="promo-content" >
+							<h4 id="headingtitle">Ralley Registration Form</h4>
+						</div>
+
+					</div>
+					<div class="container text-justify" style="padding-bottom: 25px;">
+					<div class="card" style="padding: 4%;box-shadow: 0px 8px 10px 0px rgb(0, 0, 0,2.5);">
+					
+					<h3 style="color:#2f4f6b;">Registration Form for rally been conducted at city  ${requestScope.ralleydetails.city_name}</h3>
+					
+					<%-- <h4>Dated: <fmt:formatDate value="${requestScope.sd}"  pattern="dd/MM/yyyy" /></h4> --%>
+					 <h4 style="color:#2f4f6b;">Dated: <fmt:formatDate value="${requestScope.ralleydetails.start_date}"  pattern="dd/MM/yyyy" /> to <fmt:formatDate value="${requestScope.ralleydetails.end_date}"  pattern="dd/MM/yyyy" /> </h4>
+					
+					<form action="InsertForm" method="POST" name="InsertForm" id="register" data-toggle="validator" role="form" >
+
+								<div class="form-group">
+									<label for="name">Full Name:</label> 
+									<input type="text" class="form-control" name="name" id="name" data-error="Please enter name field."  required>
+									 <div class="help-block with-errors"></div>
+								</div>
+								<div class="form-group">
+									<label for="email">Email address:</label> 
+									<input type="email" class="form-control" name="email" id="email" data-error="Please enter email."  required>
+									 <div class="help-block with-errors"></div>
+								</div>
+								<div class="form-group">
+									<label for="mobile">Mobile:</label> 
+									<input type="tel" class="form-control" name="mobile" id="mobile" data-error="Please enter 10-digit mobile no." pattern="^\d{10}$" required>
+										 <div class="help-block with-errors"></div>
+								</div>
+								  <div class="form-group">
+								<input type="hidden" name="ralleyid" value="${requestScope.ralleyId}">
+								<input type="hidden" name="city" id="city" value="${requestScope.ralleydetails.city_name}">
+                     ${requestScope.ralleyId}
+
+                  </div>
+								
+								<button type="submit" class="btn btn-primary">Submit</button>
+								<button type="reset" class="btn btn-warning">Reset</button>
+
+<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/> 
+							</form>
+							<div id="backlink" style="margin-top:3%;">
+							<a href="homepage"> << Back to List page</a>
+							</div>
+					</div>
+					</div>
+					
+					</section>
+					
+				
+				</section>
+				
+				
+				
+				<div id="footerContent">
+				<footer class="footer" id="footerContent">
+					<!-- Footer Widget Section -->
+					<div class="footer-widget-section"
+						style="padding-top: 30px; padding-bottom: 30px;">
+						<div class="container">
+							<div class="row">
+								<div class="col-sm-4 col-md-4 col-lg-4 col-xs-12"
+									style="text-align: left;">
+									<div class="widget">
+										<h4>Get in touch with us</h4>
+										<address>
+											<strong>President</strong><br>Central Airmen Selection
+											Board<br> Brar Square,Delhi Cantt,<br/> New Delhi-110 010
+										</address>
+										<p>CASB
+											Reception (24/7) contact No. - <br/>
+											<i class="icon-phone"></i> (011) 25699606, (011) 25694209 <br> <i class="icon-envelope-alt"></i>
+											email:<img style="padding-bottom: 6px;" alt="" src="resources/img/email/emailfooter.PNG"> <br> <i class="icon-envelope-alt"></i>www.airmenselection.cdac.in<br />
+											www.careerindianairforce.cdac.in
+										</p><a style="color: white;text-decoration: underline;" target="_blank" href="https://casbcms.cdac.in">Help & Support</a>
+									</div>
+									
+								</div>
+								<div class="col-sm-4 col-md-4 col-lg-4 col-xs-12"
+									style="text-align: left;">
+									<div class="widget">
+										<h4 style="padding-right: 50px;">Popular Links</h4>
+										<ul class="link-list" style="text-align: left;">
+											<li><a href="aboutcasb.html">About CASB</a></li>
+											<li><a href="rankstructure.html">Rank Structure</a></li>
+											<li><a href="eligibilityCriteria.html">Eligibility
+													Criteria</a></li>
+											<li><a href="trades_task.html">Trades &amp; Task</a></li>
+											<li><a href="pay_perks.html">Pay &amp; Perks</a></li>
+											<li><a href="airmenselectioncenter.html">Airmen
+													Selection Centres</a></li>
+											<li><a href="traininginstitution.html"> Training
+													Institutes</a></li>
+													
+										</ul>
+									</div>
+								</div>
+								<div class="col-sm-4 col-md-4 col-lg-4 col-xs-12"
+									style="text-align: left; padding-right: 50px;">
+									<div class="widget">
+										<h4>Social</h4>
+										<div id="share-buttons">
+											<!-- Buffer -->
+											<div class="row">
+												<div class="col-xs-12">
+													<a href="https://www.facebook.com/IndianAirForce/"
+														target="_blank"> <img src="resources/img/Facebook.png"
+														alt="Facebook" />@IndianAirForce
+													</a>
+												</div>
+											</div>
+											<!-- Twitter -->
+											<div class="row">
+												<div class="col-xs-12">
+													<a href="https://twitter.com/iaf_mcc" target="_blank">
+														<img src="resources/img/twitter.png" alt="Twitter" />@iaf_mcc
+													</a>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-xs-12">
+													<a href="https://www.instagram.com/IndianAirForce_mcc"
+														target="_blank"> <img src="resources/img/insta.png" alt="" />@IndianAirForce_mcc
+													</a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- /.Footer Widget Section -->
+					<div class="copyright-section">
+						<div class="container clearfix">
+							<span class="copytext">Copyright &copy; 2018 | <a
+								href="https://careerindianairforce.cdac.in/" target="_blank"
+								style="color: #3185ce">CASB, Indian Air Force</a> Designed And
+								Developed By: <strong style="color: #3185ce"> <abbr style="border-bottom: none;" title="Centre for Development of Advanced Computing &#xA; A Scientific Society of Ministry of Electronics &  Information Technology,Government of India"><a target="_blank" href="http://www.cdac.in">C-DAC</a></abbr> </strong></span>
+							<ul class="list-inline pull-right">
+								<li class="active"><a href="index.html">Home</a></li>
+								<li><a href="aboutcasb.html">About</a></li>
+								<li><a href="contact.html">Contact</a></li>
+								<li><a href="faq.html">FAQ</a></li>
+							</ul>
+						</div>
+						<!-- .container -->
+					</div>
+					<!-- .copyright-section -->
+				</footer>
+				</div>
+				<!-- .footer -->
+				</div>
+				
+				<!-- .content-wrapper -->
+				</div>
+				<!-- .offcanvas-pusher -->
+				
+				
+						
+
+
+
+
+
+	<!-- Script -->
+	<script th:src="@{/vendor/js/customjs.js}"></script>
+	<script th:src="@{/vendor/js/jquery-2.1.4.min.js}"></script>
+	<script th:src="@{/vendor/js/bootstrap.min.js}"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.5/validator.min.js"></script>
+	<!-- <script src="resources/js/smoothscroll.js"></script> -->
+	
+	<!-- <script src="https://maps.googleapis.com/maps/api/js"></script> -->
+	<script th:src="@{/vendor/js/scripts.js}"></script>
+	<script th:src="@{/vendor/js/plusminus.js}"></script>
+	<script>
+	$(document).ready(function()
+			{
+function indexActive() {
+	  $( ".indexActive" ).addClass( "active" );
+}
+
+function iafActive() {
+	  $( ".iafActive" ).addClass( "active" );
+}
+
+function casbActive() {
+	  $( ".casbActive" ).addClass( "active" );
+}
+
+function airmanActive() {
+	$( ".airmanActive" ).addClass( "active" );
+}
+
+function candidateActive() {
+	$(".candidateActive").addClass("active");
+}
+function contactActive(){
+	$(".contactActive").addClass("active");
+}
+function faqActive() {
+	$(".faqActive").addClass("active");
+}
+function ralleyActive() {
+	$(".ralleyActive").addClass("active");
+}
+			}
+</script>
 </body>
 </html>

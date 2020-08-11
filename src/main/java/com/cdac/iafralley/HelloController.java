@@ -22,7 +22,7 @@ public class HelloController {
 
         model.addAttribute("num", data);
 
-        return "index"; // index.html
+        return "update-ralley"; // index.html
     }
 
 }

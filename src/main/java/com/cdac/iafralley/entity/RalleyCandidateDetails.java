@@ -106,7 +106,6 @@ public class RalleyCandidateDetails implements Serializable {
 	
 	@Column(name = "Datetime_reporting")
 	@Temporal(TemporalType.TIMESTAMP)
-	@CreationTimestamp
 	private java.util.Date dateTimeOfReporting;
 	
 	@Column(name = "subscribed_on")
