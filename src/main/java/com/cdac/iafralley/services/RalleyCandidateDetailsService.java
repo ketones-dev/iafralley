@@ -30,6 +30,8 @@ public interface RalleyCandidateDetailsService {
 	public List<RalleyStates> getralleyAllState();
 
 	public Boolean getregisteredCount(Long cityid);
+
+	public String showOptRalleyDetailstoCandidate(Long long1);
 	
 	
 	

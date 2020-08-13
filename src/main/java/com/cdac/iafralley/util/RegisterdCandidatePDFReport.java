@@ -195,10 +195,11 @@ public static void createPDF(RalleyCandidateDetails candidate, String FILE_PATH)
 		      table.addCell("Time of Reporting");
 		      
 		      table.addCell(convertTimeStampDate(candidate.getDateTimeOfReporting()));
-		      PdfPCell venucell=new PdfPCell(new Phrase("Venu Detail"));
+		      PdfPCell venucell=new PdfPCell(new Phrase("Venu Details: "+candidate.getVenu_details()));
 		      venucell.setColspan(4);
 		      venucell.setRowspan(2);
 		      table.addCell(venucell);
+		     
 		      
 		      
 		      

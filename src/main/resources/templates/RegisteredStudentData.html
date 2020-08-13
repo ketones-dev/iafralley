@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="ISO-8859-1">
+<title>Registered Student Data</title>
+
+<link th:href="@{/vendor/css/bootstrap.min.css}" rel="stylesheet">
+<link th:href="@{/css/datatables.min.css}" rel="stylesheet">
+<link th:href="@{/css/dashboard.css}" rel="stylesheet">
+<style>
+
+
+</style>
+</head>
+<body>
+
+<div th:replace="fragments/header.html :: header"> </div>
+
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+            <h1 class="h2">Dashboard</h1>
+</div>
+
+
+
+<div class="container">
+<!-- display section -->
+<button id="btn-show-all-children" type="button">Expand All</button>
+<button id="btn-hide-all-children" type="button">Collapse All</button>
+
+<table cellspacing="5" cellpadding="5" border="0">
+        <tbody><tr>
+            <td>Minimum DOb:</td>
+            <td><input type="date" id="min" name="min"></td>
+        </tr>
+        <tr>
+            <td>Maximum DOb:</td>
+            <td><input type="date" id="max" name="max"></td>
+        </tr>
+    </tbody></table>
+    
+<table id="example" class="display table" style="width:100%;"> 
+
+<thead style="display: table-row-group;">
+
+<th></th>
+<!-- <th>Id</th> -->
+<th>EmailID</th>
+<th>Candidate Name</th>
+<th>Father's Name</th>
+<th>DOB</th>
+<th class="none">Mobile No</th>
+<th>Ralley Registration</th>
+<th>time of reporting</th>
+<th>Opted State</th>
+<th>Opted City</th>
+
+<th class="none">Married</th>
+<th class="none">Height</th>
+<th class="none">Passed Exam </th>
+<th class="none">Other Details</th>
+<th class="none">Passed Exam Percentage</th>
+<th class="none">English Exam Percentage</th>
+<th class="none">Candidate's State</th>
+<th class="none">Candidate's City</th>
+<th class="none">Subcribed On</th>
+
+
+
+
+</thead>
+<tbody>
+
+<tr th:each="student : ${studentdata}">
+<td></td>
+<!-- <td th:text="${student.id}"> </td> -->
+<td th:text="${student.emailid}"> </td>
+<td th:text="${student.name}"> </td>
+<td th:text="${student.fathername}"> </td>
+<td th:text="${student.dateOfBirth}"> </td>
+<td th:text="${student.contactno}"> </td>
+<td th:text="${student.ralleyregistrationNo}"> </td>
+<td th:text="${student.dateTimeOfReporting}"> </td>
+<td th:text="${student.opt_state_name}"> </td>
+<td th:text="${student.opt_city_name}"> </td>
+<td th:text="${student.maritial_status}"> </td>
+<td th:text="${student.height}"> </td>
+<td th:text="${student.passed_exam_detail}"> </td>
+<td th:text="${student.otherDetailPassedDetail}"> </td>
+<td th:text="${student.passed_exam_percentage}"> </td>
+<td th:text="${student.english_percentage}"> </td>
+<td th:text="${student.state}"> </td>
+<td th:text="${student.city}"> </td>
+<td th:text="${student.subscirbed_on}"> </td>
+
+</tr>
+
+
+
+
+</tbody>
+
+<tfoot style="display:table-header-group;">
+
+<th></th>
+<!-- <th>Id</th> -->
+<th><!-- EmailID --></th>
+<th><!-- Candidate Name --></th>
+<th><!-- Father's Name --></th>
+<th><!-- DOB --></th>
+<th class="none">Mobile No</th>
+<th>Ralley Registration</th>
+<th>time of reporting</th>
+<th>Opted State</th>
+<th>Opted City</th>
+
+<th class="none">Married</th>
+<th class="none">Height</th>
+<th class="none">Passed Exam </th>
+<th class="none">Other Details</th>
+<th class="none">Passed Exam Percentage</th>
+<th class="none">English Exam Percentage</th>
+<th class="none">Candidate's State</th>
+<th class="none">Candidate's City</th>
+<th class="none">Subcribed On</th>
+
+</tfoot>
+
+
+</table> 
+
+<!-- display section -->
+
+</div>
+
+</main>
+
+<script type="text/javascript" th:src="@{/vendor/js/jquery-3.3.1.min.js}"></script>
+<script type="text/javascript" th:src="@{/vendor/js/popper.min.js}"></script>
+<script type="text/javascript" th:src="@{/vendor/js/bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/datatables.min.js}"></script>
+<script type="text/javascript" th:src="@{/vendor/js/dataTables.buttons.min.js}"></script>
+<script type="text/javascript" th:src="@{/vendor/js/jszip.min.js}"></script>
+<script type="text/javascript" th:src="@{/vendor/js/pdfmake.min.js}"></script>
+<script type="text/javascript" th:src="@{/vendor/js/vfs_fonts.js}"></script>
+<script type="text/javascript" th:src="@{/vendor/js/buttons.html5.min.js}"></script>
+ <!-- Icons -->
+    <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+    <script>
+      feather.replace()
+    </script>
+
+<script>
+
+$(document).ready(function() {
+	$(document).ready(function (){
+	    var table = $('#example').DataTable({
+	    	 initComplete: function () {
+	             this.api().columns([5,6,7,8,9,10,11]).every( function () {
+	                 var column = this;
+	                 var select = $('<select><option value=""></option></select>')
+	                     .appendTo( $(column.footer()).empty() )
+	                     .on( 'change', function () {
+	                         var val = $.fn.dataTable.util.escapeRegex(
+	                             $(this).val()
+	                         );
+	  
+	                         column
+	                             .search( val ? '^'+val+'$' : '', true, false )
+	                             .draw();
+	                     } );
+	  
+	                 column.data().unique().sort().each( function ( d, j ) {
+	                     select.append( '<option value="'+d+'">'+d+'</option>' )
+	                 } );
+	             } );
+	         },
+	         "autoWidth": false,
+	        'responsive': true,
+	        dom: 'lBfrtip',
+	        buttons: [
+	        	
+	            'copyHtml5',
+	            'excelHtml5',
+	            'csvHtml5',
+	            'print'
+	           /*  {
+	                extend: 'pdfHtml5',
+	                orientation: 'potrait',
+	                pageSize: 'A2',
+	                exportOptions: {
+	                    columns: [ 2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18 ]
+	               }
+	            } */
+	        ],
+	       
+	    });
+	    
+	    $.fn.dataTable.ext.search.push(
+	            function (settings, data, dataIndex) {
+	          var min = formatDate($('#min').val());
+	          var max = formatDate($('#max').val());
+	          var startDate = formatDate(data[5]);
+	          console.log(min+"max:"+max+" sd:"+startDate);
+	          if (min == 'NaN-NaN-NaN' && max == 'NaN-NaN-NaN') { return true; }
+	          if (min == 'NaN-NaN-NaN' && startDate <= max) { return true;}
+	          if(max == 'NaN-NaN-NaN' && startDate >= min) {return true;}
+	          if (startDate <= max && startDate >= min) { return true; }
+	          return false;
+	      });
+	    $('#min').change( function() {
+	        table.draw();
+	    } );
+	    
+	    $('#max').change( function() {
+	        table.draw();
+	    } );
+
+	    // Handle click on "Expand All" button
+	    $('#btn-show-all-children').on('click', function(){
+	        // Expand row details
+	        table.rows(':not(.parent)').nodes().to$().find('td:first-child').trigger('click');
+	    });
+
+	    // Handle click on "Collapse All" button
+	    $('#btn-hide-all-children').on('click', function(){
+	        // Collapse row details
+	        table.rows('.parent').nodes().to$().find('td:first-child').trigger('click');
+	    });
+	});
+});
+
+function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) 
+        month = '0' + month;
+    if (day.length < 2) 
+        day = '0' + day;
+
+    return [year, month, day].join('-');
+}
+
+</script>
+
+</body>
+</html>

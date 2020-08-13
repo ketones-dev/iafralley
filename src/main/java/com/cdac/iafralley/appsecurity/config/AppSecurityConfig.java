@@ -2,6 +2,7 @@ package com.cdac.iafralley.appsecurity.config;
 
 import org.apache.catalina.filters.ExpiresFilter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -13,6 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 
 import com.cdac.iafralley.appsecurity.config.*;
 import com.cdac.iafralley.services.UserService;
@@ -49,7 +51,7 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 				.successHandler(successHandler())
 				.permitAll()
 			.and()
-			.logout().permitAll()
+			.logout().invalidateHttpSession(true).permitAll()
 			.and()
 				.exceptionHandling().accessDeniedPage("/access-denied").and().sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED).invalidSessionUrl("/Login").maximumSessions(1)
@@ -84,6 +86,10 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 	    return new CustomAuthenticationSuccessHandler();
 	}
 	
+	 @Bean
+	    public static ServletListenerRegistrationBean httpSessionEventPublisher() {
+	        return new ServletListenerRegistrationBean(new HttpSessionEventPublisher());
+	    }
 	  
 }
 

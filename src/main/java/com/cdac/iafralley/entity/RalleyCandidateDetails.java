@@ -68,6 +68,10 @@ public class RalleyCandidateDetails implements Serializable {
 	@Column(name="degree_detail")
 	private String otherDetailPassedDetail;
 	
+	@NotEmpty
+	@Column(name="aadhar_details")
+	private String aadhar_details;
+	
 	
 	@NotNull
 	@Column(name="passed_exam_percentage")
@@ -100,6 +104,17 @@ public class RalleyCandidateDetails implements Serializable {
 	@NotNull
 	@Column(name="opt_state")
 	private Long opt_state;
+	
+	@NotEmpty
+	@Column(name="opt_city_name")
+	private String opt_city_name;
+	
+	@NotEmpty
+	@Column(name="opt_state_name")
+	private String opt_state_name;
+	
+	@Column(name="allot_venu_details")
+	private String venu_details;
 	
 	
 	
@@ -336,6 +351,59 @@ public class RalleyCandidateDetails implements Serializable {
 	public void setOpt_state(Long opt_state) {
 		this.opt_state = opt_state;
 	}
+	
+	
+
+
+
+	public String getAadhar_details() {
+		return aadhar_details;
+	}
+
+
+
+	public void setAadhar_details(String aadhar_details) {
+		this.aadhar_details = aadhar_details;
+	}
+
+
+	
+
+	public String getOpt_city_name() {
+		return opt_city_name;
+	}
+
+
+
+	public void setOpt_city_name(String opt_city_name) {
+		this.opt_city_name = opt_city_name;
+	}
+
+
+
+	public String getOpt_state_name() {
+		return opt_state_name;
+	}
+
+
+
+	public void setOpt_state_name(String opt_state_name) {
+		this.opt_state_name = opt_state_name;
+	}
+	
+	
+
+
+
+	public String getVenu_details() {
+		return venu_details;
+	}
+
+
+
+	public void setVenu_details(String venu_details) {
+		this.venu_details = venu_details;
+	}
 
 
 
@@ -343,13 +411,29 @@ public class RalleyCandidateDetails implements Serializable {
 	public String toString() {
 		return "RalleyCandidateDetails [id=" + id + ", name=" + name + ", fathername=" + fathername + ", emailid="
 				+ emailid + ", dateOfBirth=" + dateOfBirth + ", contactno=" + contactno + ", passed_exam_detail="
-				+ passed_exam_detail + ", otherDetailPassedDetail=" + otherDetailPassedDetail
-				+ ", passed_exam_percentage=" + passed_exam_percentage + ", english_percentage=" + english_percentage
-				+ ", maritial_status=" + maritial_status + ", height=" + height + ", city=" + city + ", state=" + state
-				+ ", opt_city=" + opt_city + ", opt_state=" + opt_state + ", dateTimeOfReporting=" + dateTimeOfReporting
-				+ ", subscirbed_on=" + subscirbed_on + ", ralleyregistrationNo=" + ralleyregistrationNo + "]";
+				+ passed_exam_detail + ", otherDetailPassedDetail=" + otherDetailPassedDetail + ", aadhar_details="
+				+ aadhar_details + ", passed_exam_percentage=" + passed_exam_percentage + ", english_percentage="
+				+ english_percentage + ", maritial_status=" + maritial_status + ", height=" + height + ", city=" + city
+				+ ", state=" + state + ", opt_city=" + opt_city + ", opt_state=" + opt_state + ", opt_city_name="
+				+ opt_city_name + ", opt_state_name=" + opt_state_name + ", venu_details=" + venu_details
+				+ ", dateTimeOfReporting=" + dateTimeOfReporting + ", subscirbed_on=" + subscirbed_on
+				+ ", ralleyregistrationNo=" + ralleyregistrationNo + "]";
 	}
 
+
+
+	
+
+
+
+	
+	
+	
+	
+
+
+
+	
 
 
 	

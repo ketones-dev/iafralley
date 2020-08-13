@@ -25,5 +25,8 @@ public interface RalleyDetailsDAO extends JpaRepository<RalleyDetails, Long> {
 	@Query("select r.ralley_id from RalleyDetails r where r.city_id= :cityid")
 	public List<Long> getRalleyByCitySelected(@Param("cityid") Long cityid);
 	
+	@Query("from RalleyDetails r where r.city_id= :cityid")
+	public List<RalleyDetails> getRalleyDetailsByCitySelected(@Param("cityid") Long cityid);
+	
 
 }

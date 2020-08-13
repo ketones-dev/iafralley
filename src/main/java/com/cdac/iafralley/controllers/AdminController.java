@@ -5,11 +5,15 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,18 +22,28 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.cdac.iafralley.entity.RalleyCandidateDetails;
+import com.cdac.iafralley.entity.RalleyCities;
 import com.cdac.iafralley.entity.RalleyDaywiseSlotDetails;
 import com.cdac.iafralley.entity.RalleyDetails;
+import com.cdac.iafralley.services.RalleyCandidateDetailsService;
 import com.cdac.iafralley.services.RalleyDetailsService;
 import com.cdac.iafralley.user.RalleyDetailsDTO;
 
 @Controller
+@RequestMapping("/Dashboard")
 public class AdminController {
 	
 	@Autowired
 	RalleyDetailsService rdservice;
+	@Autowired
+	RalleyCandidateDetailsService candidateService;
 	
 	private final SimpleDateFormat DATE_TIME_FORMAT = new SimpleDateFormat("hh:mm:ss");
 	
@@ -45,7 +59,7 @@ public class AdminController {
 	}
 	
 	
-	@GetMapping("/Dashboard")
+	@GetMapping("/home")
 	public String showDashboard() {
 		System.out.println("in dashboard");
 		return "Dashboard";
@@ -104,7 +118,7 @@ public class AdminController {
 
 		rdservice.saveRalleyDetails(ralleyDetails);
 
-		return "redirect:/ShowRalleyDetails";
+		return "redirect:/Dashboard/ShowRalleyDetails";
 		
 	}
 	
@@ -141,7 +155,7 @@ public class AdminController {
 
         rdservice.saveRalleyDetails(ralleydetails);
         model.addAttribute("ralleyDetailsshow", rdservice.getAllRalleyDetails());
-        return "redirect:/ShowRalleyDetails";
+        return "redirect:/Dashboard/ShowRalleyDetails";
     }
 	
 	 @GetMapping("/delete/{id}")
@@ -150,11 +164,29 @@ public class AdminController {
 	          
 	        rdservice.deleteRalleyDetails(id);
 	        model.addAttribute("ralleyDetails", rdservice.getAllRalleyDetails());
-	        return "redirect:/ShowRalleyDetails";
+	        return "redirect:/Dashboard/ShowRalleyDetails";
 	    }
 	 
+	 @GetMapping("/ShowRegisteredStudentData")
+	 public ModelAndView ShowRegisteredStudentData()
+	 {
+		 ModelAndView m= new ModelAndView("RegisteredStudentData");
+		 List<RalleyCandidateDetails> rd=candidateService.findAll();
+		 m.addObject("studentdata", rd);
+		 return m;
+	 }
 	 
-	 
+	 @RequestMapping(value="/getCitiesonbasisofStateSeclected", method=RequestMethod.POST, produces=MediaType.APPLICATION_JSON_VALUE)
+		@ResponseBody
+		public  ResponseEntity<List<RalleyCities>> getcitiesAll(@RequestBody Map<String, Long>  stateid) {
+			
+			System.out.println("in getcities"+stateid.get("stateid"));
+		   List<RalleyCities> entityList = candidateService.getallCitesByState(stateid.get("stateid"));
+			//List<RalleyCities> entityList=Collections.EMPTY_LIST;
+		    
+		   
+		    return new ResponseEntity<List<RalleyCities>>(entityList, HttpStatus.OK);
+		}
 	 
 
 }

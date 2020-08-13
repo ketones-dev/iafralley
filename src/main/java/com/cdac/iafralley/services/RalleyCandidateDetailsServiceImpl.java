@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -229,6 +230,8 @@ public class RalleyCandidateDetailsServiceImpl implements RalleyCandidateDetails
 		return avail;
 	}
 	
+	
+	
 	public RalleyCandidateDetails getandsetTimeVenuForCandidate(RalleyCandidateDetails c) throws CandidateAllocationSlotAreFull
 	{
 		//get ralley id list
@@ -257,6 +260,7 @@ public class RalleyCandidateDetailsServiceImpl implements RalleyCandidateDetails
 							logger.info("converted string"+d);
 							
 							c.setDateTimeOfReporting(convertStringToTimestamp(d+" "+eachSlotcount.get(i).getTime_of_reporting()+":00"));
+							c.setVenu_details(eachSlotcount.get(i).getRalleydetails().getVenue_details());
 							break;
 						}
 					}
@@ -324,6 +328,39 @@ public class RalleyCandidateDetailsServiceImpl implements RalleyCandidateDetails
 			return "";
 		}
         
+	}
+
+	@Override
+	public String showOptRalleyDetailstoCandidate(Long cityid) {
+		String details="";
+		// TODO Auto-generated method stub
+		List<Long> ralleyidsList=ralleyDetailsRepo.getRalleyByCitySelected(cityid);
+		List<RalleyDetails> rd=new ArrayList<RalleyDetails>();
+		
+		for(int i=0;i< ralleyidsList.size();i++)
+		{
+		Optional<RalleyDetails>	r=ralleyDetailsRepo.findById(ralleyidsList.get(i));
+		if(r.isPresent())
+		{
+			rd.add(i,r.get());
+		}
+		else
+		{
+			return null;
+		}
+			
+		}
+		
+		
+		
+		for(RalleyDetails p:rd)
+		{
+			details +="<h2>Ralley details: </h2><h3>"+p.getRalley_details()+"</h2><h3>Conducting Dates: "+p.getStart_date()+" to "+p.getEnd_date()+"</h3><h4>"+p.getVenue_details()+"</h4><hr>";
+		}
+		
+		
+		
+		return details;
 	}
 
 }

@@ -18,6 +18,8 @@ let ralley_citySelectedValue = document.getElementById("ralleycitySelect");
 let stateSelectedValue = document.getElementById("stateSelect");
 let citySelectedValue = document.getElementById("citySelect");
 
+let duplicateerror= document.getElementById("error2");
+
 window.addEventListener('load', function() {
     console.log('All assets are loaded');
     if(error.value === "error")
@@ -42,7 +44,14 @@ window.addEventListener('load', function() {
 			  }
 			 });
     	stateSelectedValue.selectedIndex = 0;
-    	
+    	alert("please check input values...")
+    	}
+    
+    if(duplicateerror.value !== "")
+    	{
+    	ralley_stateSelectedValue.selectedIndex=0;
+    	//stateSelectedValue.selectedIndex = 0;
+    	alert("emaild id is already registered");
     	}
     
 })
@@ -51,10 +60,12 @@ window.addEventListener('load', function() {
 ralley_citySelectedValue.addEventListener("change", function(e) {
 	
 	 let data = ralley_citySelectedValue.options[ralley_citySelectedValue.selectedIndex].value;
+	 let citytext=ralley_citySelectedValue.options[ralley_citySelectedValue.selectedIndex].text;
 	 console.log(typeof data);
 	 if(data !== "0")
 		 {
 		// Create Post
+		 document.getElementById("optedcityname").value = citytext;
 		 
 		 http.post('getralleyFormOnBasisOfAdminCities', {cityid : data} , function(err, post) {
 		  if(err) {
@@ -73,7 +84,18 @@ ralley_citySelectedValue.addEventListener("change", function(e) {
 		    else
 		    	{
 		    	
-		    	toogleshowtable()
+		    	http.post('getralleyDetailsOnBasisOfAdminCities', {cityid : data} , function(err, post) {
+			   		  if(err) {
+			   		    console.log(err);
+			   		  } else {
+			   		    console.log(post);
+			   		    let cities=post;
+			   		 document.getElementById("ralleyoptdetails").innerHTML= post;
+			   		  }
+			    	 });
+		    	
+		    	toogleshowtable();
+		    	
 		    	
 		    	}
 		  }
@@ -110,8 +132,10 @@ function toogleshowtable()
 ralley_stateSelectedValue.addEventListener("change", function(e) {
 	 console.log(this);
 	 let data = ralley_stateSelectedValue.options[ralley_stateSelectedValue.selectedIndex].value;
+	 let statetext=ralley_stateSelectedValue.options[ralley_stateSelectedValue.selectedIndex].text;
 	    if(data !== "0")
 	    {
+	    	document.getElementById("optedstatename").value=statetext;
 	        addActivityItem(data,e.target.id);
 	    }
 	    //console.log(activities.value);

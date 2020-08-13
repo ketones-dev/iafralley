@@ -263,8 +263,8 @@ Shortcode Content
 /*-----------------------------
  NAVIGATION & HEADER STYLE
 --------------------------------*/
-
-/*Navigation*/
+/* 
+Navigation
 .navbar-default {
     margin-bottom : 0;
     }
@@ -291,29 +291,32 @@ Shortcode Content
     border-radius  : 2px;
     text-transform : uppercase;
     }
+*/
 
-.navbar-default .navbar-nav > li > a:focus,
-.navbar-default .navbar-nav > li > a:hover {
-    color            : #fff !important;
+ .navbar-nav > li > a:focus,
+.navbar-nav > li > a:hover {
+    color            : #fff ;
     background-color : #080808;
     }
 
-.navbar-default .navbar-nav > .active > a
+ .navbar-nav > .active > a
 {
 	 color            : #fff;
 	 background-color : #3185ce;
 }
-.navbar-default .navbar-nav > .active > a:focus,
-.navbar-default .navbar-nav > .active > a:hover {
+ .navbar-nav > .active > a:focus,
+.navbar-nav > .active > a:hover {
     color            : #fff;
     background-color : #080808;
     }
 
-.navbar-default .navbar-nav > li > a:focus,
-.navbar-default .navbar-nav > li > a:hover {
+ .navbar-nav > li > a:focus,
+.navbar-nav > li > a:hover {
     color : #fff;
     }
 
+
+/*
 .nav-cta {
     float              : right;
     margin             : 3px 0 0 40px;
@@ -343,7 +346,7 @@ Shortcode Content
     }
 
 
-/* Nav Media Querues*/
+Nav Media Querues
 
 @media screen and (max-width : 768px) {
     .navbar-collapse.collapse {
@@ -374,7 +377,7 @@ Shortcode Content
         }
 }
 
-/* Syicky Menu */
+Syicky Menu
 .sticky-nav{
     position: fixed;
     right: 0;
@@ -390,7 +393,7 @@ Shortcode Content
 }
 
 
-/* Dropdown Menu */
+Dropdown Menu
 
 .dropdown-menu {
     display            : inherit;
@@ -475,21 +478,21 @@ Shortcode Content
         display : block;
         }
     }
-
-.navbar-toggle {
+ */
+/* .navbar-toggle {
     position      : absolute;
     right         : 0;
     padding       : 5px 10px;
     border        : 0;
     border-radius : 0;
-    }
+    } */
 
-.navbar-default .navbar-toggle:focus,
+/* .navbar-default .navbar-toggle:focus,
 .navbar-default .navbar-toggle:hover {
     background-color : transparent;
-    }
+    } */
 
-.navbar-toggle .icon-bar {
+/* .navbar-toggle .icon-bar {
     width  : 14px;
     height : 3px;
     }
@@ -501,7 +504,7 @@ Shortcode Content
 .navbar-toggle .icon-bar + .icon-bar {
     margin-top : 2px;
     }
-
+ */
 /*uc-mobile-menu*/
 .uc-mobile-menu {
     }
@@ -1466,7 +1469,7 @@ icon-style
 /*-------------------
  * Form Style
  *-------------------*/
-.form-control {
+/* .form-control {
     height: 53px;
     padding: 6px 20px;
     font-size: 13px;
@@ -1479,7 +1482,7 @@ icon-style
 .form-control:focus,
 .form-control:active{
     box-shadow: none;
-}
+} */
 .widget {
 color:#FFFFFF;
 }
@@ -1693,7 +1696,7 @@ margin: 0;
     position: fixed;
 	width: 100%;
 	height: 100vh;
-	background: #FFFFFF url('../img/iafanimatelogo.gif') no-repeat center center;
+	background: #FFFFFF url('../vendor/image/iafanimatelogo.gif') no-repeat center center;
 	z-index: 9999;
 	transform-style: preserve-3d;
     }

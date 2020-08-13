@@ -410,7 +410,7 @@ rankstructure ,training institution page
 	}
 }
 
-/*******To display side toggle menu******/
+/* /*******To display side toggle menu******/
 @media ( max-width : 991px) {
 	.navbar-toggle {
 		display: block;
@@ -420,12 +420,12 @@ rankstructure ,training institution page
 	}
 }
 
-/*******Not display Nav bars for small screen**********/
+******Not display Nav bars for small screen*********
 @media screen and (max-width : 991px) {
 	.navbar-collapse.collapse {
 		display: none !important;
 	}
-}
+} */
 
 
 /****start of css for index page links**/

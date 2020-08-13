@@ -38,6 +38,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.cdac.iafralley.entity.RalleyCandidateDetails;
 import com.cdac.iafralley.entity.RalleyCities;
+import com.cdac.iafralley.entity.RalleyDaywiseSlotDetails;
 import com.cdac.iafralley.entity.RalleyStates;
 import com.cdac.iafralley.exception.CandidateSelectedStateCitiesException;
 import com.cdac.iafralley.mailConfig.MailingService;
@@ -157,7 +158,7 @@ public class RalleyRegistrationFormController {
 			 // modelAndView.addObject("ralleyCandidateDetails", ralleyCandidateDetails);
 			 // modelAndView.addObject("allStates", candidateService.getallState());
 			  redirectAttributes.addFlashAttribute("allStates", candidateService.getallState());
-			  redirectAttributes.addFlashAttribute("ralleyAllState", candidateService.getralleyAllState());;
+			  redirectAttributes.addFlashAttribute("ralleyAllState", candidateService.getralleyAllState());
 			 
 			 
 			return modelAndView;
@@ -193,10 +194,11 @@ public class RalleyRegistrationFormController {
 		  
 		  } catch (Exception e) { // TODO Auto-generated catch block
 		  
-		  modelAndView.setViewName("CandidateRegistration");
-		  modelAndView.addObject("candidateDetails", ralleyCandidateDetails);
-		  modelAndView.addObject("allStates", candidateService.getallState());
-		  modelAndView.addObject("error",e.getMessage() );
+			  modelAndView.setViewName("redirect:/showRegistrationForm");
+			  redirectAttributes.addFlashAttribute("ralleyCandidateDetails", ralleyCandidateDetails);
+		  redirectAttributes.addFlashAttribute("allStates", candidateService.getallState());
+		  redirectAttributes.addFlashAttribute("ralleyAllState", candidateService.getralleyAllState());
+		  redirectAttributes.addFlashAttribute("msgsavingerror",e.getMessage());
 		  
 		  
 		  }
@@ -242,6 +244,19 @@ public class RalleyRegistrationFormController {
 	    
 	   
 	    return new ResponseEntity<Boolean>(entityList, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/getralleyDetailsOnBasisOfAdminCities", method=RequestMethod.POST, produces=MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public  ResponseEntity<String> getralleyDetailsOnBasisOfAdminCities(@RequestBody Map<String, Long>  cityid) {
+		
+		System.out.println("in getcities"+cityid.get("cityid"));
+	   String entityList=candidateService.showOptRalleyDetailstoCandidate(cityid.get("cityid"));
+	  // Boolean entityList=false;
+		//List<RalleyCities> entityList=Collections.EMPTY_LIST;
+	    
+	   
+	    return new ResponseEntity<String>(entityList, HttpStatus.OK);
 	}
 
 	
