@@ -12,6 +12,12 @@ let message=document.getElementById("message");
 let error=document.getElementById("error");
 let optcity=document.getElementById("optcity");
 
+let passed_exam =document.getElementById('passed_exam');
+let eng_passed_exam =document.getElementById('eng_passed_exam');
+let dateOfBirth=document.getElementById('dateOfBirth');
+let height=document.getElementById('height');
+
+
 let ralley_stateSelectedValue = document.getElementById("ralleystateSelect");
 let ralley_citySelectedValue = document.getElementById("ralleycitySelect");
 
@@ -33,13 +39,13 @@ window.addEventListener('load', function() {
 			    console.log(post);
 			    let cities=JSON.parse(post);
 			    createCitydropdownData(cities,"ralleystateSelect");
-			    
-			        for ( var i = 0; i < ralley_citySelectedValue.options.length; i++ ) {
-			            if ( ralley_citySelectedValue.options[i].value === optcity.value ) {
-			            	ralley_citySelectedValue.options[i].selected = true;
-			                return;
-			            }
-			        }
+			    //optcity.value
+			       // for ( var i = 0; i < ralley_citySelectedValue.options.length; i++ ) {
+			         //   if ( ralley_citySelectedValue.options[i].value === "0" ) {
+			            	ralley_citySelectedValue.options[0].selected = true;
+			           //     return;
+			           // }
+			       // }
 			    
 			  }
 			 });
@@ -51,7 +57,7 @@ window.addEventListener('load', function() {
     	{
     	ralley_stateSelectedValue.selectedIndex=0;
     	//stateSelectedValue.selectedIndex = 0;
-    	alert("emaild id is already registered");
+    	alert("Either emaild id or aahdar is already registered");
     	}
     
 })
@@ -62,7 +68,7 @@ ralley_citySelectedValue.addEventListener("change", function(e) {
 	 let data = ralley_citySelectedValue.options[ralley_citySelectedValue.selectedIndex].value;
 	 let citytext=ralley_citySelectedValue.options[ralley_citySelectedValue.selectedIndex].text;
 	 console.log(typeof data);
-	 if(data !== "0")
+	 if(data !== "")
 		 {
 		// Create Post
 		 document.getElementById("optedcityname").value = citytext;
@@ -89,10 +95,32 @@ ralley_citySelectedValue.addEventListener("change", function(e) {
 			   		    console.log(err);
 			   		  } else {
 			   		    console.log(post);
-			   		    let cities=post;
-			   		 document.getElementById("ralleyoptdetails").innerHTML= post;
+			   		    let ra=post;
+			   		 document.getElementById("ralleyoptdetails").innerHTML= ra;
+			   		 
+			   		if(cities === true){
+				    	http.post('getralleyValidationDetailsOnBasisOfAdminCities', {cityid : data} , function(err, post) {
+					   		  if(err) {
+					   		    console.log(err);
+					   		  } else {
+					   		    console.log(post);
+					   		    let data=JSON.parse(post);
+					   		 passed_exam.setAttribute("min",data.minpassing);
+					   		eng_passed_exam.setAttribute("min",data.engpassing);
+					   	 passed_exam.setAttribute("max","100");
+					   		eng_passed_exam.setAttribute("max","100");
+					   		dateOfBirth.setAttribute("min",data.mindob);
+					   		dateOfBirth.setAttribute("max",data.maxdob);
+					   		height.setAttribute("min",data.height);
+					   		 
+					   		  }
+					    	 });
+				    	}
+			   		 
 			   		  }
 			    	 });
+		    	
+		    	
 		    	
 		    	toogleshowtable();
 		    	
@@ -133,11 +161,23 @@ ralley_stateSelectedValue.addEventListener("change", function(e) {
 	 console.log(this);
 	 let data = ralley_stateSelectedValue.options[ralley_stateSelectedValue.selectedIndex].value;
 	 let statetext=ralley_stateSelectedValue.options[ralley_stateSelectedValue.selectedIndex].text;
-	    if(data !== "0")
+	    if(data !== "")
 	    {
+	    	
+	    	toogleshowmsg();
+	    	document.getElementById("message").innerHTML = "";
+	    	
 	    	document.getElementById("optedstatename").value=statetext;
 	        addActivityItem(data,e.target.id);
 	    }
+	    else
+	    	{
+	    	 toogleshowmsg();
+	      	  let messagetag="Please select state";
+	      	$('#ralleycitySelect option:not(:first)').remove();
+	      	 
+	      	  document.getElementById("message").innerHTML = messagetag;
+	    	}
 	    //console.log(activities.value);
 	});
  

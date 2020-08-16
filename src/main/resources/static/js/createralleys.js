@@ -9,10 +9,58 @@ let stateSelectedValue = document.getElementById("stateSelect");
 let citySelectedValue = document.getElementById("citySelect");
 let start_date=document.getElementById("start_date");
 let end_date=document.getElementById("end_date");
+let optcity=document.getElementById("optcity");
+let ralley_id=document.getElementById("ralley_id");
+let state_name=document.getElementById("statename");
+let city_name=document.getElementById("cityname");
+let min_dob=document.getElementById("min_dob");
+let max_dob=document.getElementById("max_dob");
+
+window.addEventListener('load', function() {
+	 let data = stateSelectedValue.options[stateSelectedValue.selectedIndex].value;
+	 state_name.value = stateSelectedValue.options[stateSelectedValue.selectedIndex].text;
+    console.log('All assets are loaded');
+    
+    if(ralley_id.value !== "")
+    	{
+    	start_date.readOnly =true;
+    	end_date.readOnly =true;
+    	}
+    
+ http.post('getCitiesonbasisofStateSeclected', {stateid : data} , function(err, post) {
+			  if(err) {
+			    console.log(err);
+			  } else {
+			    console.log(post);
+			    let cities=JSON.parse(post);
+			    createCitydropdownData(cities);
+			    console.log(optcity.value);
+			        for ( var i = 0; i < citySelectedValue.options.length; i++ ) {
+			            if ( citySelectedValue.options[i].value === optcity.value ) {
+			            	citySelectedValue.options[i].selected = true;
+			                return;
+			            }
+			        }
+			    
+			  }
+});
+});
+
+
+
+citySelectedValue.addEventListener("change", function() {
+	
+	let data = citySelectedValue.options[citySelectedValue.selectedIndex].text;
+	
+	city_name.value =data;
+	 
+	
+});
 
 stateSelectedValue.addEventListener("change", function() {
 	 console.log(this);
 	 let data = stateSelectedValue.options[stateSelectedValue.selectedIndex].value;
+	 state_name.value = stateSelectedValue.options[stateSelectedValue.selectedIndex].text;
 	    if(data.text !== "0")
 	    {
 	        addActivityItem(data);
@@ -134,7 +182,7 @@ let input = document.createElement('input');
     	input.type = 'date';
     	let newstartdate=new Date();
     	let date=new Date(newstartdate.setDate(start_date.getDate()+i));
-    
+    	input.readOnly =true;
     	input.value = formatDateToString(date) ;
     }
      else if(fieldName === 'time_of_reporting')
@@ -145,6 +193,7 @@ let input = document.createElement('input');
         input.classList.add('form-control');
         input.id = listName + i + '.' + fieldName;
         input.setAttribute('name', listName + '[' + i+ '].' + fieldName);
+        input.setAttribute("required","true");
 
         col.appendChild(input);
         row.appendChild(col);
@@ -249,3 +298,21 @@ function formatDateToString(date){
 	   // create the format you want
 	   return yyyy + "-" + MM + "-" + dd;
 	}
+
+
+document.getElementById('form').addEventListener('submit', function(evt){
+	var d1=new Date(start_date.value);
+	var d2=new Date(end_date.value);
+	var dob1=new Date(min_dob.value);
+	var dob2=new Date(max_dob.value);
+	console.log(d1>d2 );
+	if(d1>d2 || dob1>dob2){
+		evt.preventDefault();
+		
+		alert("error!...Please check dates filed...");
+		
+	}
+    
+    
+});
+

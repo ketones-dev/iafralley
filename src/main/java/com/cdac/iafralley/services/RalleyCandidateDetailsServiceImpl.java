@@ -86,10 +86,12 @@ public class RalleyCandidateDetailsServiceImpl implements RalleyCandidateDetails
 		}
 		logger.info("before genrating id checking registring emailid is already present in DB or not...");
 		RalleyCandidateDetails result=ralleyCandidateDetailsRepo.findByEmailid(candidate.getEmailid());
-		if(result != null)
+		RalleyCandidateDetails result2=ralleyCandidateDetailsRepo.findByAadhar_details(candidate.getAadhar_details());
+		if(result != null || result2 != null)
 		{
-			throw new CandidateDuplicateEntry("emailid:"+candidate.getEmailid()+" is already registered on this portal");
+			throw new CandidateDuplicateEntry("Either emailid:"+candidate.getEmailid()+"or aadhar"+candidate.getAadhar_details()+" is already registered on this portal");
 		}
+		
 		logger.info("Registering emailid is not present in DB so proceeding further...");
 		logger.info("checking for availability");
 		candidate=getandsetTimeVenuForCandidate(candidate);
@@ -356,6 +358,36 @@ public class RalleyCandidateDetailsServiceImpl implements RalleyCandidateDetails
 		for(RalleyDetails p:rd)
 		{
 			details +="<h2>Ralley details: </h2><h3>"+p.getRalley_details()+"</h2><h3>Conducting Dates: "+p.getStart_date()+" to "+p.getEnd_date()+"</h3><h4>"+p.getVenue_details()+"</h4><hr>";
+		}
+		
+		logger.info(details);
+		
+		return details;
+	}
+
+	@Override
+	public Map<String,String> showOptValidRalleyDetailstoCandidate(Long long1) {
+		// TODO Auto-generated method stub
+		Map<String,String> details=new HashMap<String, String>();
+		List<Long> ralleyidsList=ralleyDetailsRepo.getRalleyByCitySelected(long1);
+		//List<RalleyDetails> rd=new ArrayList<RalleyDetails>();
+		
+		for(int i=0;i< ralleyidsList.size();i++)
+		{
+		Optional<RalleyDetails>	r=ralleyDetailsRepo.findById(ralleyidsList.get(i));
+		if(r.isPresent())
+		{
+			details.put("mindob", convertDateToString(r.get().getMin_dob()));
+			details.put("maxdob", convertDateToString(r.get().getMax_dob()));
+			details.put("height", r.get().getMin_height().toString());
+			details.put("minpassing", r.get().getMin_passing_percentage().toString());
+			details.put("engpassing", r.get().getMin_eng_percentage().toString());
+		}
+		else
+		{
+			return null;
+		}
+			
 		}
 		
 		

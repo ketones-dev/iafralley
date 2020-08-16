@@ -13,6 +13,9 @@ public interface RalleyCandidateDetailsDAO extends JpaRepository<RalleyCandidate
 
 	public RalleyCandidateDetails findByEmailid(String email);
 	
+	@Query("select r from RalleyCandidateDetails r where r.aadhar_details= :aadhar")
+	public RalleyCandidateDetails findByAadhar_details(@Param("aadhar")String aadhar_details);
+	
 	@Query("select max(SUBSTRING(a.ralleyregistrationNo,10,5)) from RalleyCandidateDetails a")
 	public String maxCount();
 	

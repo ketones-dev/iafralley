@@ -98,12 +98,12 @@ public class AdminController {
 			return "CreateRalley";
 		}
 
-		rd.setCity_id((long) 1);
-		rd.setState_id((long) 1);
+		//rd.setCity_id((long) 1);
+		//rd.setState_id((long) 1);
 		System.out.println(rd.toString());
-		RalleyDetails ralleyDetails = new RalleyDetails(rd.getState_id(), rd.getCity_id(), rd.getRalley_details(),
+		RalleyDetails ralleyDetails = new RalleyDetails(rd.getRalley_id(),rd.getState_id(), rd.getCity_id(), rd.getRalley_details(),
 				rd.getVenue_details(), rd.getStart_date(), rd.getEnd_date(), rd.getNo_OfDays(), rd.getMin_dob(),
-				rd.getMax_dob(), rd.getMin_passing_percentage(), rd.getMin_eng_percentage(), rd.getMin_height());
+				rd.getMax_dob(), rd.getMin_passing_percentage(), rd.getMin_eng_percentage(), rd.getMin_height(),rd.getCity_name(),rd.getState_name());
 
 		List<RalleyDaywiseSlotDetails> slotlist = rd.getRalleydaywiseSlot();
 
@@ -111,7 +111,7 @@ public class AdminController {
 		rds.forEach(System.out::println);
 
 		slotlist.forEach(p -> {
-			RalleyDaywiseSlotDetails newobj = new RalleyDaywiseSlotDetails(p.getNo_of_intake(), p.getDay_date(),
+			RalleyDaywiseSlotDetails newobj = new RalleyDaywiseSlotDetails(p.getSlot_id(),p.getNo_of_intake(), p.getDay_date(),
 					p.getTime_of_reporting());
 			ralleyDetails.add(newobj);
 		});
@@ -127,7 +127,7 @@ public class AdminController {
         RalleyDetails rs = rdservice.findById(id);
        // List<RalleyDaywiseSlotDetails> sdetails=rd
         List<RalleyDaywiseSlotDetails> rds=rdservice.getAllSlot(rs) ;
-        
+        System.out.println(rs.toString());
             if(rs == null)
             {
             	model.addAttribute("error", "id does exist any more");
@@ -140,6 +140,7 @@ public class AdminController {
             rds.forEach(System.out::println);
            // model.addAttribute("slotlist", rds);    
         model.addAttribute("ralleyDetails", rs);
+        model.addAttribute("allStates", rdservice.getallState());
         return "CreateRalley";
     }
 
@@ -176,7 +177,7 @@ public class AdminController {
 		 return m;
 	 }
 	 
-	 @RequestMapping(value="/getCitiesonbasisofStateSeclected", method=RequestMethod.POST, produces=MediaType.APPLICATION_JSON_VALUE)
+	 @RequestMapping(value="/edit/getCitiesonbasisofStateSeclected", method=RequestMethod.POST, produces=MediaType.APPLICATION_JSON_VALUE)
 		@ResponseBody
 		public  ResponseEntity<List<RalleyCities>> getcitiesAll(@RequestBody Map<String, Long>  stateid) {
 			
@@ -188,5 +189,33 @@ public class AdminController {
 		    return new ResponseEntity<List<RalleyCities>>(entityList, HttpStatus.OK);
 		}
 	 
+	 @RequestMapping(value="/getCitiesonbasisofStateSeclected", method=RequestMethod.POST, produces=MediaType.APPLICATION_JSON_VALUE)
+		@ResponseBody
+		public  ResponseEntity<List<RalleyCities>> getCitiesonbasisofStateSeclected(@RequestBody Map<String, Long>  stateid) {
+			
+			System.out.println("in getcities"+stateid.get("stateid"));
+		   List<RalleyCities> entityList = candidateService.getallCitesByState(stateid.get("stateid"));
+			//List<RalleyCities> entityList=Collections.EMPTY_LIST;
+		    
+		   
+		    return new ResponseEntity<List<RalleyCities>>(entityList, HttpStatus.OK);
+		}
+	 
+	 
+	 @RequestMapping(value="/getralleyallotCities", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
+		@ResponseBody
+		public  ResponseEntity<List<RalleyDetails>> getralleyallotCities() {
+			List<RalleyDetails> entityList= rdservice.findDistinctCity_id();
+			
+			
+			//System.out.println("in getcities"+stateid.get("stateid"));
+		 //  List<RalleyCities> entityList = candidateService.getallCitesByState(stateid.get("stateid"));
+			//List<RalleyCities> entityList=Collections.EMPTY_LIST;
+		    
+		   
+		    return new ResponseEntity<List<RalleyDetails>>(entityList, HttpStatus.OK);
+		}
+	 
+	
 
 }

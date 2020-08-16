@@ -18,6 +18,8 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="ralley_daywise_details")
 public class RalleyDaywiseSlotDetails {
@@ -41,6 +43,7 @@ public class RalleyDaywiseSlotDetails {
 	@Column(name="time_of_reporting")
 	private  String time_of_reporting;
 	
+	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY,
             cascade =  CascadeType.ALL)
 	@JoinColumn(name="ralley_id")
@@ -50,9 +53,10 @@ public class RalleyDaywiseSlotDetails {
 		// TODO Auto-generated constructor stub
 	}
 
-	public RalleyDaywiseSlotDetails(@NotNull Long no_of_intake, @NotNull Date day_date,
+	public RalleyDaywiseSlotDetails(@NotNull Long slot_id,@NotNull Long no_of_intake, @NotNull Date day_date,
 			@NotNull @NotNull @NotNull String time_of_reporting) {
 		super();
+		this.slot_id=slot_id;
 		this.no_of_intake = no_of_intake;
 		this.day_date = day_date;
 		this.time_of_reporting = time_of_reporting;

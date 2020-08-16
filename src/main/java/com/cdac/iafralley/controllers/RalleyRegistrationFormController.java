@@ -258,6 +258,19 @@ public class RalleyRegistrationFormController {
 	   
 	    return new ResponseEntity<String>(entityList, HttpStatus.OK);
 	}
+	
+	@RequestMapping(value="/getralleyValidationDetailsOnBasisOfAdminCities", method=RequestMethod.POST, produces=MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public  ResponseEntity<Map<String, String>> getralleyValidationDetailsOnBasisOfAdminCities(@RequestBody Map<String, Long>  cityid) {
+		
+		System.out.println("in getcities"+cityid.get("cityid"));
+	   Map<String, String> entityList=candidateService.showOptValidRalleyDetailstoCandidate(cityid.get("cityid"));
+	  // Boolean entityList=false;
+		//List<RalleyCities> entityList=Collections.EMPTY_LIST;
+	    
+	   
+	    return new ResponseEntity<Map<String, String>>(entityList, HttpStatus.OK);
+	}
 
 	
 

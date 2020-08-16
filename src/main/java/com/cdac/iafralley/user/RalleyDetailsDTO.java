@@ -21,13 +21,18 @@ import com.cdac.iafralley.entity.RalleyDaywiseSlotDetails;
 public class RalleyDetailsDTO {
 	
 	
+	private Long ralley_id;
 	
+	private Long slot_id;
 	
 	
 	private Long state_id;
 	
 	
 	private Long city_id;
+	
+	private String state_name;
+	private String city_name;
 	
 	@NotNull
 	private String ralley_details;
@@ -177,6 +182,38 @@ public class RalleyDetailsDTO {
 
 	public void setRalleydaywiseSlot(List<RalleyDaywiseSlotDetails> ralleydaywiseSlot) {
 		this.ralleydaywiseSlot = ralleydaywiseSlot;
+	}
+
+	public String getState_name() {
+		return state_name;
+	}
+
+	public void setState_name(String state_name) {
+		this.state_name = state_name;
+	}
+
+	public String getCity_name() {
+		return city_name;
+	}
+
+	public void setCity_name(String city_name) {
+		this.city_name = city_name;
+	}
+
+	public Long getRalley_id() {
+		return ralley_id;
+	}
+
+	public void setRalley_id(Long ralley_id) {
+		this.ralley_id = ralley_id;
+	}
+
+	public Long getSlot_id() {
+		return slot_id;
+	}
+
+	public void setSlot_id(Long slot_id) {
+		this.slot_id = slot_id;
 	}
 	
 	

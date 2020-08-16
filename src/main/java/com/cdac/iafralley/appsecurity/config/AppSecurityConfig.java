@@ -41,7 +41,7 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 
 		http.authorizeRequests()
-			.antMatchers("/IAFRalley/**","/").permitAll()
+			.antMatchers("/IAFRalley/RegistrationSuccess","/IAFRalley/showRegistrationForm","/resources/**").permitAll()
 			
 			.antMatchers("/Dashboard/**").hasRole("ADMIN")
 			.and()
@@ -51,10 +51,10 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 				.successHandler(successHandler())
 				.permitAll()
 			.and()
-			.logout().invalidateHttpSession(true).permitAll()
+			.logout().invalidateHttpSession(true).clearAuthentication(true).permitAll()
 			.and()
 				.exceptionHandling().accessDeniedPage("/access-denied").and().sessionManagement()
-				.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED).invalidSessionUrl("/Login").maximumSessions(1)
+				.sessionCreationPolicy(SessionCreationPolicy.NEVER).invalidSessionUrl("/Login").maximumSessions(1)
 				.maxSessionsPreventsLogin(true);
              
 		

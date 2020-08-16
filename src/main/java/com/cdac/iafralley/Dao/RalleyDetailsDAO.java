@@ -28,5 +28,8 @@ public interface RalleyDetailsDAO extends JpaRepository<RalleyDetails, Long> {
 	@Query("from RalleyDetails r where r.city_id= :cityid")
 	public List<RalleyDetails> getRalleyDetailsByCitySelected(@Param("cityid") Long cityid);
 	
+	@Query(nativeQuery = true,value = "select distinct on(city_id) * from ralley_details")
+	public List<RalleyDetails> findDistinctCity_id();
+	
 
 }

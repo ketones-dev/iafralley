@@ -14,12 +14,15 @@ import org.springframework.context.annotation.PropertySource;
 import com.cdac.iafralley.controllers.RalleyRegistrationFormController;
 import com.cdac.iafralley.entity.RalleyCandidateDetails;
 import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Image;
+import com.itextpdf.text.List;
+import com.itextpdf.text.ListItem;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
@@ -57,7 +60,7 @@ public static void createPDF(RalleyCandidateDetails candidate, String FILE_PATH)
     	System.out.println(FILE_PATH+candidate.getRalleyregistrationNo()+".pdf");
     	
     	Document document = new Document(PageSize.A4);
-    	document.setMargins(50, 50, 100, 70); 
+    	document.setMargins(50, 50, 50, 50); 
        PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(FILE_PATH+candidate.getRalleyregistrationNo()+".pdf"));
        document.open();
        
@@ -70,7 +73,18 @@ public static void createPDF(RalleyCandidateDetails candidate, String FILE_PATH)
        rect.setBorderWidth(1);
        document.add(rect);
        
+       Font f = new Font();
+       f.setStyle(Font.BOLD);
+       f.setStyle(Font.UNDERLINE);
+       f.setSize(17);
 		//Inserting Image in PDF
+       Paragraph heading = new Paragraph("PROVISIONAL ADMIT CARD",f);
+       
+       
+       heading.setAlignment(Element.ALIGN_CENTER);
+       
+       document.add(heading);
+       
 
 	     Image image1 = Image.getInstance ("src/main/resources/images/badge.png");
 	     image1.scaleAbsolute(50f, 50f);//image width,height	
@@ -210,13 +224,49 @@ public static void createPDF(RalleyCandidateDetails candidate, String FILE_PATH)
 		      
 		      
 		      table.setSpacingBefore(30.0f);       // Space Before table starts, like margin-top in CSS
-		      table.setSpacingAfter(30.0f);        // Space After table starts, like margin-Bottom in CSS								          
+		      table.setSpacingAfter(18.0f);        // Space After table starts, like margin-Bottom in CSS								          
 		      
-		      table2.setSpacingBefore(60.0f);       // Space Before table starts, like margin-top in CSS
+		      table2.setSpacingBefore(30.0f);       // Space Before table starts, like margin-top in CSS
 		      							          
 		      
 		      document.add(table2);
 		      document.add(table);
+		      
+		      Paragraph Instheading = new Paragraph("IMPORTANT INSTRUCTIONS FOR CANDIDATES",f);
+		       
+		       
+		      Instheading.setAlignment(Element.ALIGN_CENTER);
+		      Instheading.setSpacingAfter(15f);
+		      
+		       
+		       document.add(Instheading);
+		       
+		       Paragraph instruction = new Paragraph();
+		       instruction.add("Candidates are to mandatorily carry following documents in original while reporting at the venue of recruitment rally as per the date & time given below:-");
+		       instruction.setFirstLineIndent(40);
+		       document.add(instruction);
+		       
+		       List ordered=new List(List.ORDERED,List.ALPHABETICAL);
+		       ordered.setLowercase(List.LOWERCASE);
+		       ordered.setIndentationLeft(70);
+		       ordered.add(new ListItem("Provisional Admit Card"));
+		       ordered.add(new ListItem("Domicile Certificate"));
+		       ordered.add(new ListItem("Mark sheets & Pass Certificate of Intermediate or equivalent"));
+		       ordered.add(new ListItem("Pass Certificate of Martric"));
+		       ordered.add(new ListItem("Valid Photo ID"));
+		       ordered.add(new ListItem("NCC / SOAFP / Service Certificate, if applicable "));
+		       
+		       document.add(ordered);
+		       
+		       document.add(new Chunk("Note:-"));
+		       document.add(new Phrase(" Failure to bring the above mentioned documents while reporting for the recruitment rally may result in cancellation of your candidature to appear in the selection test."));
+		       
+		       
+
+
+		       
+		       
+		      
 
 	 
        

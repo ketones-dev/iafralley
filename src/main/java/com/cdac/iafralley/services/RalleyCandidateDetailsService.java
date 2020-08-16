@@ -32,6 +32,8 @@ public interface RalleyCandidateDetailsService {
 	public Boolean getregisteredCount(Long cityid);
 
 	public String showOptRalleyDetailstoCandidate(Long long1);
+
+	public Map<String, String> showOptValidRalleyDetailstoCandidate(Long long1);
 	
 	
 	

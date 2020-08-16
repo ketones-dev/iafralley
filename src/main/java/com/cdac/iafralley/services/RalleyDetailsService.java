@@ -64,9 +64,18 @@ public class RalleyDetailsService {
 	
 	public void saveRalleyDetails(RalleyDetails r)
 	{
-		
+		System.out.println(r.getRalley_id());
 		ralleydetaildao.save(r);
 	}
+	
+	/*
+	 * public void updateRalleyDetails(RalleyDetails r) { Optional<RalleyDetails>
+	 * rds=ralleydetaildao.findById(r.getRalley_id());
+	 * 
+	 * if(rds.isPresent()) {
+	 * 
+	 * } ralleydetaildao.savean; }
+	 */
 	
 	public void deleteRalleyDetails(Long id)
 	{
@@ -102,4 +111,9 @@ public class RalleyDetailsService {
 		
 		
 	}
+	
+	public List<RalleyDetails> findDistinctCity_id(){
+		List<RalleyDetails> ralleydc=ralleydetaildao.findDistinctCity_id();
+		return ralleydc;
+ 	}
 }

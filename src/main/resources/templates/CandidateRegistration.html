@@ -242,7 +242,7 @@ display:inline-block;
 									<label for="city" class="col-form-label">Select City</label>
 										
 										<select th:field="*{opt_city}" id="ralleycitySelect" class="custom-select" required>
-												<option  selected  value="0">---Select City----</option>
+												<option  selected  value="">---Select City----</option>
 
 
 										</select>
@@ -319,8 +319,8 @@ display:inline-block;
 							<div class="form-group col-md-6">
 								<label for="mobile" class="col-form-label">Enter Addhar No.:</label>
 								<input type="text" 
-									class="form-control"  th:field="*{aadhar_details}" id="aadhar"  placeholder="Enter aadhar Number" required>
-									<div class="invalid-feedback">Please provide a valid contactno.</div>
+									class="form-control"  th:field="*{aadhar_details}" id="aadhar" pattern="^[2-9]{1}[0-9]{3}[0-9]{4}[0-9]{4}$" placeholder="Enter aadhar Number" required>
+									<div class="invalid-feedback">Please provide a valid addhar.</div>
 								<span th:if="${#fields.hasErrors('aadhar_details')}"    th:errors="*{aadhar_details}" class="text-danger"></span>
 							</div>
 							
@@ -618,6 +618,7 @@ display:inline-block;
 	<script th:src="@{/vendor/js/scripts.js}"></script>
 	<script th:src="@{/vendor/js/plusminus.js}"></script>
 	<script th:src="@{/js/validation.js}"></script>
+	<script th:src="@{/js/validateaadhar.js}"></script>
 	<script type="text/javascript" th:src="@{/js/easyhttp.js}"></script>
 	<script type="text/javascript" th:src="@{/js/candidateRegistration.js}"></script>
 	<script>
@@ -630,7 +631,26 @@ display:inline-block;
 	    	
 	    });
 	    
-	    
+	    $('#aadhar').on("change, blur", function(e) {
+	    	var p=new RegExp("^[2-9]{1}[0-9]{3}[0-9]{4}[0-9]{4}$");
+	    	var reg=p.test(e.target.value);
+	    	var aadhar =document.getElementById('aadhar');
+	    	if(!reg )
+	    		{
+	    		alert("Enter aadhar card no:"+e.target.value+" is invalid please type again");
+	    		e.target.value = "";
+	    		
+	    		}
+	    	else if(validate(e.target.value) === false)
+	    		{
+	    		
+		    		alert("Enter aadhar card no:"+e.target.value+" is invalid please type again");
+		    		e.target.value = "";
+		    		
+		    		
+	    		}
+	    	
+	    });
 	    
 	    
 	});
@@ -645,6 +665,8 @@ display:inline-block;
     // Loop over them and prevent submission
     var validation = Array.prototype.filter.call(forms, function(form) {
       form.addEventListener('submit', function(event) {
+    	 
+    		
         if (form.checkValidity() === false) {
           event.preventDefault();
           event.stopPropagation();

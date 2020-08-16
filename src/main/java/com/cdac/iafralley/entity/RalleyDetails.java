@@ -15,9 +15,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="ralley_details")
@@ -35,6 +38,16 @@ public class RalleyDetails {
 	@NotNull
 	@Column(name="city_id")
 	private Long city_id;
+	
+	@NotEmpty
+	@Column(name="state_name")
+	private String state_name;
+	
+	@NotEmpty
+	@Column(name="city_name")
+	private String city_name;
+	
+	
 	
 	@NotNull
 	@Column(name="ralley_details")
@@ -87,6 +100,7 @@ public class RalleyDetails {
 	@Column(name="min_height")
 	private Long min_height;
 	
+	
 	@OneToMany(fetch = FetchType.LAZY,mappedBy = "ralleydetails",cascade = CascadeType.ALL)
 	private List<RalleyDaywiseSlotDetails> ralleydaywiseSlot;
 	
@@ -97,10 +111,11 @@ public class RalleyDetails {
 
 
 
-	public RalleyDetails(Long state_id, Long city_id, String ralley_details, String venue_details, Date start_date,
+	public RalleyDetails(Long ralley_id,Long state_id, Long city_id, String ralley_details, String venue_details, Date start_date,
 			Date end_date, int no_OfDays, Date min_dob, Date max_dob, Long min_passing_percentage,
-			Long min_eng_percentage, Long min_height) {
+			Long min_eng_percentage, Long min_height,String city_name,String state_name) {
 		super();
+		this.ralley_id=ralley_id;
 		this.state_id = state_id;
 		this.city_id = city_id;
 		this.ralley_details = ralley_details;
@@ -113,6 +128,8 @@ public class RalleyDetails {
 		this.min_passing_percentage = min_passing_percentage;
 		this.min_eng_percentage = min_eng_percentage;
 		this.min_height = min_height;
+		this.city_name=city_name;
+		this.state_name=state_name;
 	}
 
 
@@ -283,20 +300,50 @@ public class RalleyDetails {
 		this.ralleydaywiseSlot = ralleydaywiseSlot;
 	}
 
+	
 
 
+	public String getState_name() {
+		return state_name;
+	}
+
+
+
+	public void setState_name(String state_name) {
+		this.state_name = state_name;
+	}
+
+
+
+	public String getCity_name() {
+		return city_name;
+	}
+
+
+
+	public void setCity_name(String city_name) {
+		this.city_name = city_name;
+	}
+
+
+
+	
+	
+	
+	
+	
 	@Override
 	public String toString() {
 		return "RalleyDetails [ralley_id=" + ralley_id + ", state_id=" + state_id + ", city_id=" + city_id
-				+ ", ralley_details=" + ralley_details + ", venue_details=" + venue_details + ", start_date="
-				+ start_date + ", end_date=" + end_date + ", no_OfDays=" + no_OfDays + ", min_dob=" + min_dob
-				+ ", max_dob=" + max_dob + ", min_passing_percentage=" + min_passing_percentage
-				+ ", min_eng_percentage=" + min_eng_percentage + ", min_height=" + min_height + "]";
+				+ ", state_name=" + state_name + ", city_name=" + city_name + ", ralley_details=" + ralley_details
+				+ ", venue_details=" + venue_details + ", start_date=" + start_date + ", end_date=" + end_date
+				+ ", no_OfDays=" + no_OfDays + ", min_dob=" + min_dob + ", max_dob=" + max_dob
+				+ ", min_passing_percentage=" + min_passing_percentage + ", min_eng_percentage=" + min_eng_percentage
+				+ ", min_height=" + min_height + ", ralleydaywiseSlot=" + ralleydaywiseSlot + "]";
 	}
-	
-	
-	
-	
+
+
+
 	//conventional method for bidirectional mapping
 	public void add(RalleyDaywiseSlotDetails rds) {
 		
