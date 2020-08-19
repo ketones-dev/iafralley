@@ -21,6 +21,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.WebDataBinder;
@@ -33,6 +34,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -139,8 +141,10 @@ public class RalleyRegistrationFormController {
 	}
 	 
 	@PostMapping("/registerCandidate")
-	public ModelAndView createUser(@ModelAttribute("ralleyCandidateDetails") @Valid RalleyCandidateDetails ralleyCandidateDetails, BindingResult result,RedirectAttributes redirectAttributes) {
+	public ModelAndView createUser(@ModelAttribute("ralleyCandidateDetails") @Valid RalleyCandidateDetails ralleyCandidateDetails, BindingResult result,@RequestParam("XMarksheet") MultipartFile  XMarksheet,@RequestParam("XIIMarksheet") MultipartFile  XIIMarksheet,RedirectAttributes redirectAttributes) {
 		ModelAndView modelAndView = new ModelAndView();
+		
+		
 		
 		logger.info("error:"+result.hasErrors());
 		if (result.hasErrors()) {
@@ -169,10 +173,10 @@ public class RalleyRegistrationFormController {
 		
 		
 		  try { RalleyCandidateDetails
-		  candidateDetails=candidateService.save(ralleyCandidateDetails);
+		  candidateDetails=candidateService.save(ralleyCandidateDetails,XMarksheet,XIIMarksheet);
 		  //modelAndView.addObject("allUsers", userService.getAllUsers());
 		  //modelAndView.addObject("candidateDetails",candidateDetails );
-		  RegisterdCandidatePDFReport.createPDF(candidateDetails,FILE_PATH);
+		  //RegisterdCandidatePDFReport.createPDF(candidateDetails,FILE_PATH);
 		  String to=candidateDetails.getEmailid();
 		String subject="Ralley Registration Conformation";
 		String message="Thank u for registring and Here is your register detail application form";
@@ -180,7 +184,7 @@ public class RalleyRegistrationFormController {
 		
 		try {
 		
-		MailingService.sendMail(mailserver, from, password, candidateDetails, subject, message,FILE_PATH);
+		//MailingService.sendMail(mailserver, from, password, candidateDetails, subject, message,FILE_PATH);
 		}
 		catch(Exception e)
 		{

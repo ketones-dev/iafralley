@@ -17,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.cdac.iafralley.Dao.RalleyCandidateDetailsDAO;
 import com.cdac.iafralley.Dao.RalleyCitiesDAO;
@@ -47,6 +48,9 @@ public class RalleyCandidateDetailsServiceImpl implements RalleyCandidateDetails
 	private RalleyCitiesDAO conductingCities; 
 	
 	@Autowired
+	private StoreImageFiles storeimagefile;
+	
+	@Autowired
 	private RalleyStateDAO conductingStates; 
 	
 	@Autowired
@@ -65,7 +69,7 @@ public class RalleyCandidateDetailsServiceImpl implements RalleyCandidateDetails
 	}
 
 	@Override
-	public RalleyCandidateDetails save(RalleyCandidateDetails candidate) throws CandidateSelectedStateCitiesException, CandidateDuplicateEntry, CandidateAllocationSlotAreFull {
+	public RalleyCandidateDetails save(RalleyCandidateDetails candidate,MultipartFile x,MultipartFile xii) throws CandidateSelectedStateCitiesException, CandidateDuplicateEntry, CandidateAllocationSlotAreFull {
 		// TODO Auto-generated method stub
 		//check for availability and get registration No id
 		
@@ -93,9 +97,11 @@ public class RalleyCandidateDetailsServiceImpl implements RalleyCandidateDetails
 		}
 		
 		logger.info("Registering emailid is not present in DB so proceeding further...");
-		logger.info("checking for availability");
-		candidate=getandsetTimeVenuForCandidate(candidate);
-		logger.info("Genrating registration id and alloting daywise time to candidate");
+		
+		
+		//logger.info("checking for availability");
+		//candidate=getandsetTimeVenuForCandidate(candidate);
+		//logger.info("Genrating registration id and alloting daywise time to candidate");
 		Optional<RalleyCities> opt_cityname = conductingCities.findById(candidate.getOpt_city());
 		String VenuCode=null;
 		if(opt_cityname.isPresent())
@@ -108,7 +114,8 @@ public class RalleyCandidateDetailsServiceImpl implements RalleyCandidateDetails
 		String regisrationid=ralleyIdGenrator.RalleyRegistrationNumGenrator(VenuCode);
 		candidate.setRalleyregistrationNo(regisrationid);
 		logger.info("for candidate with emailid:"+candidate.getEmailid()+" Genrated Candidate registration ID:"+regisrationid);
-		
+		logger.info("storing certificate paths in db and writing in disk");
+		candidate=storeimagefile.storeImage(candidate, x, xii);
 		
 		logger.info("Before saving Candidate filled values are :"+candidate.toString());
 		return ralleyCandidateDetailsRepo.save(candidate);

@@ -3,6 +3,8 @@ package com.cdac.iafralley.services;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.cdac.iafralley.entity.RalleyCandidateDetails;
 import com.cdac.iafralley.entity.RalleyCities;
 import com.cdac.iafralley.entity.RalleyDetails;
@@ -15,7 +17,7 @@ public interface RalleyCandidateDetailsService {
 	
 	public List<RalleyCandidateDetails> findAll();
 	
-	public RalleyCandidateDetails save(RalleyCandidateDetails candidate) throws CandidateSelectedStateCitiesException, CandidateDuplicateEntry, CandidateAllocationSlotAreFull;
+	public RalleyCandidateDetails save(RalleyCandidateDetails candidate, MultipartFile xMarksheet, MultipartFile xIIMarksheet) throws CandidateSelectedStateCitiesException, CandidateDuplicateEntry, CandidateAllocationSlotAreFull;
 	
 	public RalleyCandidateDetails findById(Long id);
 	

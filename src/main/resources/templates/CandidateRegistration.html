@@ -215,7 +215,7 @@ display:inline-block;
 							</h4>
 
 						<form action="#" th:action="@{/registerCandidate}"
-							th:object="${ralleyCandidateDetails}" method="post" id="form" class="needs-validation" novalidate>
+							th:object="${ralleyCandidateDetails}" method="post" id="form" class="needs-validation" enctype="multipart/form-data" novalidate>
 							<input type="hidden" th:value="${error}" id="error"> 
 							<input type="hidden" th:value="${optcity}" id="optcity">
 							<input type="hidden" th:value="${msgsavingerror}" id="error2"> 
@@ -344,6 +344,30 @@ display:inline-block;
 											
 									</div>
 
+								</div>
+								
+								<div class="row" style="padding-left: 1.5%;">
+								<div class="form-group col-12">
+								<label class="col-form-label">Upload Marksheets:</label>
+								</div>
+								<div class="form-group col-md-8">
+								<label class="col-form-label">
+								10th Marksheet:<input type="file" name="XMarksheet" id="X_marksheet" accept="image/*"  onchange="loadFile(event)" class="form-control" >
+								</label>
+								</div><div class="form-group col-md-4">
+								<p><label for="file" style="cursor: pointer;"></label></p>
+								<p><img id="output"  width="125px" /></p></div>
+								
+								<div class="form-group col-md-8">
+								<label class="col-form-label">
+								12th Marksheet:<input type="file" name="XIIMarksheet" accept="image/*" id="XII_marksheet" onchange="loadFile(event)" class="form-control" required>
+								</label>
+								</div><div class="form-group col-md-4">
+								<p><label for="file" style="cursor: pointer;"></label></p>
+								<p><img id="output2"  width="125px" /></p>
+								</div>
+								
+								
 								</div>
 								
 								<div class="form-group col-md-6">
@@ -676,6 +700,21 @@ display:inline-block;
     });
   }, false);
 })();
+</script>
+<script type="text/javascript">
+
+
+var loadFile = function(event) {
+	var image = document.getElementById('output');
+	var image2 = document.getElementById('output2');
+	
+    if(event.target.id === "X_marksheet")
+       image.src = URL.createObjectURL(event.target.files[0]);
+    else
+    	 image2.src = URL.createObjectURL(event.target.files[0]);
+    	
+};
+
 </script>
 
 </body>

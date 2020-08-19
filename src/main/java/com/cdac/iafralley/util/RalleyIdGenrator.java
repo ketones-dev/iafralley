@@ -18,7 +18,7 @@ public class RalleyIdGenrator implements RalleyIdGenratorInterface{
 	
 	
 	private String year_cycle="20";
-	private String asc_value="15ASC";
+	private String asc_value="15";
 
 	//add param as of candidate pref city for ralley and check if count for such city is there if 0 then send error message
 	@Override

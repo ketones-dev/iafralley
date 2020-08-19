@@ -14,6 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -40,6 +41,7 @@ public class RalleyDaywiseSlotDetails {
 	private Date day_date;
 	
 	@NotNull
+	@NotEmpty
 	@Column(name="time_of_reporting")
 	private  String time_of_reporting;
 	
