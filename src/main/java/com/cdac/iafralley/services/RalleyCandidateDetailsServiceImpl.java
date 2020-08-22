@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,16 +24,19 @@ import com.cdac.iafralley.Dao.RalleyCandidateDetailsDAO;
 import com.cdac.iafralley.Dao.RalleyCitiesDAO;
 import com.cdac.iafralley.Dao.RalleyDaywiseSlotDetailsDAO;
 import com.cdac.iafralley.Dao.RalleyDetailsDAO;
+import com.cdac.iafralley.Dao.RalleyGroupDAO;
 import com.cdac.iafralley.Dao.RalleyStateDAO;
 import com.cdac.iafralley.controllers.RalleyRegistrationFormController;
 import com.cdac.iafralley.entity.RalleyCandidateDetails;
 import com.cdac.iafralley.entity.RalleyCities;
 import com.cdac.iafralley.entity.RalleyDaywiseSlotDetails;
 import com.cdac.iafralley.entity.RalleyDetails;
+import com.cdac.iafralley.entity.RalleyGroup_trade;
 import com.cdac.iafralley.entity.RalleyStates;
 import com.cdac.iafralley.exception.CandidateAllocationSlotAreFull;
 import com.cdac.iafralley.exception.CandidateDuplicateEntry;
 import com.cdac.iafralley.exception.CandidateSelectedStateCitiesException;
+import com.cdac.iafralley.exception.InvalidImageException;
 import com.cdac.iafralley.util.RalleyIdGenrator;
 
 
@@ -61,6 +65,9 @@ public class RalleyCandidateDetailsServiceImpl implements RalleyCandidateDetails
 	
 	@Autowired
 	private RalleyDaywiseSlotDetailsDAO ralleyDaywiseSlotDetailsRepo;
+	
+	@Autowired
+	private RalleyGroupDAO ralley_grp;
 
 	@Override
 	public List<RalleyCandidateDetails> findAll() {
@@ -69,7 +76,7 @@ public class RalleyCandidateDetailsServiceImpl implements RalleyCandidateDetails
 	}
 
 	@Override
-	public RalleyCandidateDetails save(RalleyCandidateDetails candidate,MultipartFile x,MultipartFile xii) throws CandidateSelectedStateCitiesException, CandidateDuplicateEntry, CandidateAllocationSlotAreFull {
+	public RalleyCandidateDetails save(RalleyCandidateDetails candidate,MultipartFile x,MultipartFile xii) throws CandidateSelectedStateCitiesException, CandidateDuplicateEntry, CandidateAllocationSlotAreFull, InvalidImageException {
 		// TODO Auto-generated method stub
 		//check for availability and get registration No id
 		
@@ -402,4 +409,28 @@ public class RalleyCandidateDetailsServiceImpl implements RalleyCandidateDetails
 		return details;
 	}
 
+	@Override
+	public List<RalleyGroup_trade> getralleyCreatedGroups(Long long1) {
+		// TODO Auto-generated method stub
+		List<RalleyDetails> rds=ralleyDetailsRepo.getRalleyDetailsByCitySelected(long1);
+		rds.stream().forEach(System.out::print);
+		if(rds == null || rds.isEmpty())
+		{
+			return null;
+		}
+		else if( rds.get(0).getRalleyForGroup() == null)
+		{
+			return null;
+		}
+		else {
+			rds.stream().forEach(System.out::print);
+			logger.info(rds.get(0).getRalleyForGroup().toString());
+		List<String> ids=rds.get(0).getRalleyForGroup();
+		ids.stream().forEach(System.out::print);
+		List<Long> grpid=ids.stream().map(Long::parseLong).collect(Collectors.toList());
+		List<RalleyGroup_trade> rgt=ralley_grp.getDetails(grpid);
+		rgt.stream().forEach(System.out::print);
+		return rgt;
+	}
+	}
 }

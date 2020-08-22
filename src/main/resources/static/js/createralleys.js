@@ -15,6 +15,7 @@ let state_name=document.getElementById("statename");
 let city_name=document.getElementById("cityname");
 let min_dob=document.getElementById("min_dob");
 let max_dob=document.getElementById("max_dob");
+let check_input=document.getElementsByName("ralleyForGroup");
 
 window.addEventListener('load', function() {
 	 let data = stateSelectedValue.options[stateSelectedValue.selectedIndex].value;
@@ -180,8 +181,9 @@ let input = document.createElement('input');
     if(fieldName === 'day_date')
     { 
     	input.type = 'date';
-    	let newstartdate=new Date();
+    	let newstartdate=new Date(start_date);
     	let date=new Date(newstartdate.setDate(start_date.getDate()+i));
+    	console.log(start_date.getDate());
     	input.readOnly =true;
     	input.value = formatDateToString(date) ;
     }
@@ -292,9 +294,10 @@ function formatDateToString(date){
 	   var dd = (date.getDate() < 10 ? '0' : '') + date.getDate();
 	   // 01, 02, 03, ... 10, 11, 12
 	   var MM = ((date.getMonth() + 1) < 10 ? '0' : '') + (date.getMonth() + 1);
+	   console.log(MM);
 	   // 1970, 1971, ... 2015, 2016, ...
 	   var yyyy = date.getFullYear();
-
+	   console.log(yyyy + "-" + MM + "-" + dd);
 	   // create the format you want
 	   return yyyy + "-" + MM + "-" + dd;
 	}
@@ -305,6 +308,7 @@ document.getElementById('form').addEventListener('submit', function(evt){
 	var d2=new Date(end_date.value);
 	var dob1=new Date(min_dob.value);
 	var dob2=new Date(max_dob.value);
+	var check=false;
 	console.log(d1>d2 );
 	if(d1>d2 || dob1>dob2){
 		evt.preventDefault();
@@ -312,6 +316,29 @@ document.getElementById('form').addEventListener('submit', function(evt){
 		alert("error!...Please check dates filed...");
 		
 	}
+	
+	for(var i=0; i<check_input.length; i++){
+		   if((check_input[i].checked))
+		     {
+			   check=true;
+			   break;
+				
+		     }
+		   else{
+			   check=false;
+		   }
+	}
+	if(check == false)
+		{
+		evt.preventDefault();
+		
+		alert("error!...Please check group/trade ...");
+		}
+	
+	
+	
+	      
+	   
     
     
 });

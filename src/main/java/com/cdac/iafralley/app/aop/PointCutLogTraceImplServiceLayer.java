@@ -18,6 +18,7 @@ public class PointCutLogTraceImplServiceLayer {
 		
 		logger.info("Exception in class:{} ::method:{}: with cause:{}",joinPoint.getSignature().getDeclaringTypeName(),
 				joinPoint.getSignature().getName(),ex.getMessage());
+		ex.printStackTrace();
 		
 	}
 

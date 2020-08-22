@@ -75,8 +75,11 @@ public class RalleyDetailsDTO {
 	@NotNull
 	private Long min_height;
 	
+	@NotNull
+	private List<String> ralleyForGroup;
 	
 	private List<RalleyDaywiseSlotDetails> ralleydaywiseSlot;
+	
 
 	
 
@@ -214,6 +217,14 @@ public class RalleyDetailsDTO {
 
 	public void setSlot_id(Long slot_id) {
 		this.slot_id = slot_id;
+	}
+
+	public List<String> getRalleyForGroup() {
+		return ralleyForGroup;
+	}
+
+	public void setRalleyForGroup(List<String> ralleyForGroup) {
+		this.ralleyForGroup = ralleyForGroup;
 	}
 	
 	

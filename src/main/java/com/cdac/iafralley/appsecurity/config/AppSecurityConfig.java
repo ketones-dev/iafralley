@@ -41,7 +41,8 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 
 		http.authorizeRequests()
-			.antMatchers("/IAFRalley/RegistrationSuccess","/IAFRalley/showRegistrationForm","/resources/**").permitAll()
+			.antMatchers("/IAFRalley/RegistrationSuccess","/IAFRalley/showRegistrationForm").anonymous()
+			.antMatchers("/resources/**","/upload/**").permitAll()
 			
 			.antMatchers("/Dashboard/**").hasRole("ADMIN")
 			.and()
@@ -59,6 +60,8 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
              
 		
 	}
+	
+	
 	
 	//beans
 	//bcrypt bean definition

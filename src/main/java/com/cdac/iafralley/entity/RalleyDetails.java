@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -20,6 +21,7 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.cdac.iafralley.util.StringListConverter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -99,6 +101,10 @@ public class RalleyDetails {
 	@NotNull
 	@Column(name="min_height")
 	private Long min_height;
+	
+	@Convert(converter = StringListConverter.class)
+	@Column(name="ralley_for_Groups")
+	private List<String> ralleyForGroup;
 	
 	
 	@OneToMany(fetch = FetchType.LAZY,mappedBy = "ralleydetails",cascade = CascadeType.ALL)
@@ -326,12 +332,24 @@ public class RalleyDetails {
 	}
 
 
+	
+	
+	
+	
+	
+	
+	public List<String> getRalleyForGroup() {
+		return ralleyForGroup;
+	}
 
-	
-	
-	
-	
-	
+
+
+	public void setRalleyForGroup(List<String> ralleyForGroup) {
+		this.ralleyForGroup = ralleyForGroup;
+	}
+
+
+
 	@Override
 	public String toString() {
 		return "RalleyDetails [ralley_id=" + ralley_id + ", state_id=" + state_id + ", city_id=" + city_id

@@ -82,6 +82,7 @@ public class AdminController {
 		mv.addObject("ralleyDetails", rd);
 		mv.addObject("slotlist", rd.getRalleydaywiseSlot());
 		mv.addObject("allStates", rdservice.getallState());
+		mv.addObject("allgroups",rdservice.getAllgroups());
 		return mv;
 		
 	}
@@ -105,6 +106,8 @@ public class AdminController {
 				rd.getVenue_details(), rd.getStart_date(), rd.getEnd_date(), rd.getNo_OfDays(), rd.getMin_dob(),
 				rd.getMax_dob(), rd.getMin_passing_percentage(), rd.getMin_eng_percentage(), rd.getMin_height(),rd.getCity_name(),rd.getState_name());
 
+		ralleyDetails.setRalleyForGroup(rd.getRalleyForGroup());
+		
 		List<RalleyDaywiseSlotDetails> slotlist = rd.getRalleydaywiseSlot();
 
 		List<RalleyDaywiseSlotDetails> rds = rd.getRalleydaywiseSlot();
@@ -141,6 +144,7 @@ public class AdminController {
            // model.addAttribute("slotlist", rds);    
         model.addAttribute("ralleyDetails", rs);
         model.addAttribute("allStates", rdservice.getallState());
+        model.addAttribute("allgroups",rdservice.getAllgroups());
         return "CreateRalley";
     }
 

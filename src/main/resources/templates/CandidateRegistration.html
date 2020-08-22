@@ -335,7 +335,7 @@ display:inline-block;
 									</div>
 									<div class="form-check ">
 										<input class="form-check-input" type="radio" th:field="*{passed_exam_detail}" value="other" required> <label
-											class="form-check-label" for="other"> Other
+											class="form-check-label" for="other"> Other/Diploma
 											 </label>
 											 <span th:if="${#fields.hasErrors('passed_exam_detail')}"
 											th:class="'error'">Select passing detail</span>
@@ -343,8 +343,21 @@ display:inline-block;
 											a option</div>
 											
 									</div>
+									
+									
+									
 
 								</div>
+								
+								<div class="form-group col-md-6" id="grptrade">
+									<label for="pass">Select Group/Trade:</label>
+									<select class="form-control" id="selectgroup">
+									</select>
+									</div>
+									<input type="hidden" th:field="*{opt_group_id}" id="groupSelectedValue"> 
+									<input type="hidden" th:field="*{optedGroupTrade}" id="groupSelectedText"> 
+									
+								
 								
 								<div class="row" style="padding-left: 1.5%;">
 								<div class="form-group col-12">
@@ -352,7 +365,7 @@ display:inline-block;
 								</div>
 								<div class="form-group col-md-8">
 								<label class="col-form-label">
-								10th Marksheet:<input type="file" name="XMarksheet" id="X_marksheet" accept="image/*"  onchange="loadFile(event)" class="form-control" >
+								10th Pass Certificate:<input type="file" name="XMarksheet" id="X_marksheet" accept="image/*"  onchange="loadFile(event)" class="form-control" required>
 								</label>
 								</div><div class="form-group col-md-4">
 								<p><label for="file" style="cursor: pointer;"></label></p>
@@ -360,7 +373,7 @@ display:inline-block;
 								
 								<div class="form-group col-md-8">
 								<label class="col-form-label">
-								12th Marksheet:<input type="file" name="XIIMarksheet" accept="image/*" id="XII_marksheet" onchange="loadFile(event)" class="form-control" required>
+								12th Pass Certificate<span id="diploma" style="display:none;">/Marks sheet for 03 years diploma course in Engineering</span><span id="vocational" style="display:none;">/Marks sheet of 02 years vocational course</span><span id="othercourse" >/Other</span><input type="file" name="XIIMarksheet" accept="image/*" id="XII_marksheet" onchange="loadFile(event)" class="form-control" required>
 								</label>
 								</div><div class="form-group col-md-4">
 								<p><label for="file" style="cursor: pointer;"></label></p>
@@ -542,16 +555,13 @@ display:inline-block;
 									<div class="widget">
 										<h4 style="padding-right: 50px;">Popular Links</h4>
 										<ul class="link-list" style="text-align: left;">
-											<li><a href="aboutcasb.html">About CASB</a></li>
-											<li><a href="rankstructure.html">Rank Structure</a></li>
-											<li><a href="eligibilityCriteria.html">Eligibility
-													Criteria</a></li>
-											<li><a href="trades_task.html">Trades &amp; Task</a></li>
-											<li><a href="pay_perks.html">Pay &amp; Perks</a></li>
-											<li><a href="airmenselectioncenter.html">Airmen
-													Selection Centres</a></li>
-											<li><a href="traininginstitution.html"> Training
-													Institutes</a></li>
+											<li><a target="_blank" href="https://airmenselection.cdac.in/CASB/aboutcasb.html">About CASB</a></li> 
+            <li><a target="_blank" href="https://airmenselection.cdac.in/CASB/rankstructure.html">Rank Structure</a></li> 
+            <li><a target="_blank" href="https://airmenselection.cdac.in/CASB/eligibilityCriteria.html">Eligibility Criteria</a></li> 
+            <li><a target="_blank" href="https://airmenselection.cdac.in/CASB/trades_task.html">Trades &#38; Task</a></li> 
+            <li><a target="_blank" href="https://airmenselection.cdac.in/CASB/pay_perks.html">Pay &#38; Perks</a></li> 
+            <li><a target="_blank" href="https://airmenselection.cdac.in/CASB/airmenselectioncenter.html">Airmen Selection Centres</a></li> 
+            <li><a target="_blank" href="https://airmenselection.cdac.in/CASB/traininginstitution.html"> Training Institutes</a></li> 
 
 										</ul>
 									</div>
@@ -561,7 +571,7 @@ display:inline-block;
 									<div class="widget">
 										<h4>Social</h4>
 										<div id="share-buttons">
-											Buffer
+											
 											<div class="row">
 												<div class="col-xs-12">
 													<a href="https://www.facebook.com/IndianAirForce/"
@@ -570,7 +580,7 @@ display:inline-block;
 													</a>
 												</div>
 											</div>
-											Twitter
+											
 											<div class="row">
 												<div class="col-xs-12">
 													<a href="https://twitter.com/iaf_mcc" target="_blank">

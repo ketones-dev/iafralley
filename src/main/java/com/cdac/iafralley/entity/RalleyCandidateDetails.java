@@ -113,8 +113,32 @@ public class RalleyCandidateDetails implements Serializable {
 	@Column(name="opt_state_name")
 	private String opt_state_name;
 	
+	
+	@Column(name="opt_group_id")
+	private Long opt_group_id;
+	
 	@Column(name="allot_venu_details")
 	private String venu_details;
+	
+	@Column(name="x_imagepath")
+	private String ximagePath;
+	
+	@Column(name="xii_imagepath")
+	private String xiiimagePath;
+	
+	@Column(name="opted_group_trade")
+	private String optedGroupTrade;
+	
+	@Column(name="is_allocated")
+	private Boolean isAllocated;
+	
+	@Column(name="is_admit_card_genrated")
+	private Boolean isAdminCardGenrated;
+	
+	@Column(name="is_email_send")
+	private Boolean isEmailSend;
+	
+	
 	
 	
 	
@@ -406,6 +430,101 @@ public class RalleyCandidateDetails implements Serializable {
 	}
 
 
+	
+
+	public String getXimagePath() {
+		return ximagePath;
+	}
+
+
+
+	public void setXimagePath(String ximagePath) {
+		this.ximagePath = ximagePath;
+	}
+
+
+
+	public String getXiiimagePath() {
+		return xiiimagePath;
+	}
+
+
+
+	public void setXiiimagePath(String xiiimagePath) {
+		this.xiiimagePath = xiiimagePath;
+	}
+	
+	
+
+
+
+	public String getOptedGroupTrade() {
+		return optedGroupTrade;
+	}
+
+
+
+	public void setOptedGroupTrade(String optedGroupTrade) {
+		this.optedGroupTrade = optedGroupTrade;
+	}
+
+
+
+	
+
+
+	
+
+
+	public Boolean getIsAllocated() {
+		return isAllocated;
+	}
+
+
+
+	public void setIsAllocated(Boolean isAllocated) {
+		this.isAllocated = isAllocated;
+	}
+
+
+
+	public Boolean getIsAdminCardGenrated() {
+		return isAdminCardGenrated;
+	}
+
+
+
+	public void setIsAdminCardGenrated(Boolean isAdminCardGenrated) {
+		this.isAdminCardGenrated = isAdminCardGenrated;
+	}
+
+
+
+	public Boolean getIsEmailSend() {
+		return isEmailSend;
+	}
+
+
+
+	public void setIsEmailSend(Boolean isEmailSend) {
+		this.isEmailSend = isEmailSend;
+	}
+	
+	
+
+
+
+	public Long getOpt_group_id() {
+		return opt_group_id;
+	}
+
+
+
+	public void setOpt_group_id(Long opt_group_id) {
+		this.opt_group_id = opt_group_id;
+	}
+
+
 
 	@Override
 	public String toString() {
@@ -415,10 +534,15 @@ public class RalleyCandidateDetails implements Serializable {
 				+ aadhar_details + ", passed_exam_percentage=" + passed_exam_percentage + ", english_percentage="
 				+ english_percentage + ", maritial_status=" + maritial_status + ", height=" + height + ", city=" + city
 				+ ", state=" + state + ", opt_city=" + opt_city + ", opt_state=" + opt_state + ", opt_city_name="
-				+ opt_city_name + ", opt_state_name=" + opt_state_name + ", venu_details=" + venu_details
-				+ ", dateTimeOfReporting=" + dateTimeOfReporting + ", subscirbed_on=" + subscirbed_on
-				+ ", ralleyregistrationNo=" + ralleyregistrationNo + "]";
+				+ opt_city_name + ", opt_state_name=" + opt_state_name + ",opt_group_id="+opt_group_id+", venu_details=" + venu_details
+				+ ", ximagePath=" + ximagePath + ", xiiimagePath=" + xiiimagePath + ", dateTimeOfReporting="
+				+ dateTimeOfReporting + ", subscirbed_on=" + subscirbed_on + ", ralleyregistrationNo="
+				+ ralleyregistrationNo + "]";
 	}
+
+
+
+
 
 
 

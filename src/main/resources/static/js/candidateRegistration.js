@@ -24,6 +24,9 @@ let ralley_citySelectedValue = document.getElementById("ralleycitySelect");
 let stateSelectedValue = document.getElementById("stateSelect");
 let citySelectedValue = document.getElementById("citySelect");
 
+
+let grp_tradeSelect = document.getElementById("selectgroup");
+
 let duplicateerror= document.getElementById("error2");
 
 window.addEventListener('load', function() {
@@ -57,7 +60,7 @@ window.addEventListener('load', function() {
     	{
     	ralley_stateSelectedValue.selectedIndex=0;
     	//stateSelectedValue.selectedIndex = 0;
-    	alert("Either emaild id or aahdar is already registered");
+    	alert(duplicateerror.value);
     	}
     
 })
@@ -116,6 +119,40 @@ ralley_citySelectedValue.addEventListener("change", function(e) {
 					   		  }
 					    	 });
 				    	}
+			   		if(cities === true)
+			   			{
+			   			http.post('getralleyCreatedGroups', {cityid : data} , function(err, post) {
+					   		  if(err) {
+					   		    console.log(err);
+					   		  } else {
+					   		    console.log(post);
+					   		    if(post === "")
+					   		    	{
+					   		    	document.getElementById("grptrade").style.display = "none";
+					   		    	console.log('either no grop is select or city is not there');
+					   		    	}
+					   		    else{
+					   		    let data=JSON.parse(post);
+					   		 document.getElementById("grptrade").style.display = "block";
+					   		 var dropdown = document.getElementById("selectgroup");
+					   		
+					   		 dropdown.setAttribute("required","required");
+					   		 dropdown.innerHTML="<option value='' selected>---Select Group/trade----</option>";
+					   		    for(var s=0;s<data.length;s++)
+					   		    	{
+					   		    	
+					   		    	var opt = document.createElement("option"); 
+					   		    	opt.value = data[s].id;
+					   		    	opt.text = data[s].group_name;
+					   		    	dropdown.options.add(opt);
+					   		    	}
+					   		    document.getElementById("grptrade").appendChild(dropdown);
+					   		    
+					   		    }
+					   		 
+					   		  }
+					    	 });
+			   			}
 			   		 
 			   		  }
 			    	 });
@@ -180,6 +217,10 @@ ralley_stateSelectedValue.addEventListener("change", function(e) {
 	    	}
 	    //console.log(activities.value);
 	});
+
+
+
+
  
  
 stateSelectedValue.addEventListener("change", function(e) {
@@ -191,6 +232,42 @@ stateSelectedValue.addEventListener("change", function(e) {
 	    }
 	    //console.log(activities.value);
 	});
+
+
+grp_tradeSelect.addEventListener("change", function(e) {
+	console.log(this);
+	let data =grp_tradeSelect.options[grp_tradeSelect.selectedIndex].value;
+	let text=grp_tradeSelect.options[grp_tradeSelect.selectedIndex].text;
+	if(data !== "")
+		{
+		document.getElementById("groupSelectedValue").value=data;
+		document.getElementById("groupSelectedText").value=text;
+		if(data === "1")
+			{
+			document.getElementById("diploma").style.display ="block";
+			document.getElementById("vocational").style.display ="none";
+			document.getElementById("othercourse").style.display ="none";
+			
+			}
+		else if(data === "2")
+			{
+			document.getElementById("diploma").style.display ="none";
+			document.getElementById("vocational").style.display ="block";
+			document.getElementById("othercourse").style.display ="none";
+			}
+		else{
+			document.getElementById("diploma").style.display ="none";
+			document.getElementById("vocational").style.display ="none";
+			document.getElementById("othercourse").style.display ="block";
+			
+		}
+		console.log(document.getElementById("groupSelectedValue").value);
+		console.log(document.getElementById("groupSelectedText").value);
+		}
+	
+});
+
+
  
  function addActivityItem(data,id){
 	 if(id === "stateSelect"){

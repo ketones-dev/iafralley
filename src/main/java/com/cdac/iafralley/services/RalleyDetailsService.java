@@ -12,10 +12,12 @@ import org.springframework.stereotype.Service;
 import com.cdac.iafralley.Dao.RalleyCitiesDAO;
 import com.cdac.iafralley.Dao.RalleyDaywiseSlotDetailsDAO;
 import com.cdac.iafralley.Dao.RalleyDetailsDAO;
+import com.cdac.iafralley.Dao.RalleyGroupDAO;
 import com.cdac.iafralley.Dao.RalleyStateDAO;
 import com.cdac.iafralley.entity.RalleyCities;
 import com.cdac.iafralley.entity.RalleyDaywiseSlotDetails;
 import com.cdac.iafralley.entity.RalleyDetails;
+import com.cdac.iafralley.entity.RalleyGroup_trade;
 import com.cdac.iafralley.entity.RalleyStates;
 
 @Service
@@ -34,6 +36,9 @@ public class RalleyDetailsService {
 	
 	@Autowired
 	private RalleyStateDAO conductingStates; 
+	
+	@Autowired
+	private RalleyGroupDAO ralley_grp;
 	
 	public RalleyDetails findById(Long id)
 	{
@@ -116,4 +121,9 @@ public class RalleyDetailsService {
 		List<RalleyDetails> ralleydc=ralleydetaildao.findDistinctCity_id();
 		return ralleydc;
  	}
+	
+	public List<RalleyGroup_trade> getAllgroups(){
+		List<RalleyGroup_trade> groups=ralley_grp.findAll();
+		return groups;
+	}
 }

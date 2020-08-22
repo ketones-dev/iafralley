@@ -1,9 +1,5 @@
 package com.cdac.iafralley.controllers;
 
-import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -13,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpStatus;
@@ -21,9 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -40,15 +33,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.cdac.iafralley.entity.RalleyCandidateDetails;
 import com.cdac.iafralley.entity.RalleyCities;
-import com.cdac.iafralley.entity.RalleyDaywiseSlotDetails;
-import com.cdac.iafralley.entity.RalleyStates;
-import com.cdac.iafralley.exception.CandidateSelectedStateCitiesException;
-import com.cdac.iafralley.mailConfig.MailingService;
+import com.cdac.iafralley.entity.RalleyGroup_trade;
 import com.cdac.iafralley.services.RalleyCandidateDetailsService;
-import com.cdac.iafralley.services.UserService;
-import com.cdac.iafralley.user.RalleyCandidateDTO;
-import com.cdac.iafralley.util.RalleyIdGenrator;
-import com.cdac.iafralley.util.RegisterdCandidatePDFReport;
 
 
 
@@ -172,25 +158,26 @@ public class RalleyRegistrationFormController {
 		
 		
 		
-		  try { RalleyCandidateDetails
-		  candidateDetails=candidateService.save(ralleyCandidateDetails,XMarksheet,XIIMarksheet);
-		  //modelAndView.addObject("allUsers", userService.getAllUsers());
+		  try {
+			RalleyCandidateDetails candidateDetails = candidateService.save(ralleyCandidateDetails, XMarksheet,XIIMarksheet);
+			//PDF and mail genration code
+			// modelAndView.addObject("allUsers", userService.getAllUsers());
 		  //modelAndView.addObject("candidateDetails",candidateDetails );
 		  //RegisterdCandidatePDFReport.createPDF(candidateDetails,FILE_PATH);
-		  String to=candidateDetails.getEmailid();
-		String subject="Ralley Registration Conformation";
-		String message="Thank u for registring and Here is your register detail application form";
-		
-		
-		try {
-		
-		//MailingService.sendMail(mailserver, from, password, candidateDetails, subject, message,FILE_PATH);
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-			
-		}
+			/*
+			 * String to=candidateDetails.getEmailid(); String
+			 * subject="Ralley Registration Conformation"; String
+			 * message="Thank u for registring and Here is your register detail application form"
+			 * ;
+			 * 
+			 * 
+			 * try {
+			 * 
+			 * //MailingService.sendMail(mailserver, from, password, candidateDetails,
+			 * subject, message,FILE_PATH); } catch(Exception e) { e.printStackTrace();
+			 * 
+			 * }
+			 */
 		
 		 redirectAttributes.addFlashAttribute("candidateDetails", candidateDetails);
 		  modelAndView.setViewName("redirect:/RegistrationSuccess");
@@ -199,7 +186,7 @@ public class RalleyRegistrationFormController {
 		  } catch (Exception e) { // TODO Auto-generated catch block
 		  
 			  modelAndView.setViewName("redirect:/showRegistrationForm");
-			  redirectAttributes.addFlashAttribute("ralleyCandidateDetails", ralleyCandidateDetails);
+			  redirectAttributes.addFlashAttribute("ralleyCandidateDetails", new RalleyCandidateDetails());
 		  redirectAttributes.addFlashAttribute("allStates", candidateService.getallState());
 		  redirectAttributes.addFlashAttribute("ralleyAllState", candidateService.getralleyAllState());
 		  redirectAttributes.addFlashAttribute("msgsavingerror",e.getMessage());
@@ -274,6 +261,19 @@ public class RalleyRegistrationFormController {
 	    
 	   
 	    return new ResponseEntity<Map<String, String>>(entityList, HttpStatus.OK);
+	}
+
+	@RequestMapping(value="/getralleyCreatedGroups", method=RequestMethod.POST, produces=MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public  ResponseEntity<List<RalleyGroup_trade>> getralleyCreatedGroups(@RequestBody Map<String, Long>  cityid) {
+		
+		System.out.println("in getcities"+cityid.get("cityid"));
+	   List<RalleyGroup_trade> entityList=candidateService.getralleyCreatedGroups(cityid.get("cityid"));
+	  // Boolean entityList=false;
+		//List<RalleyCities> entityList=Collections.EMPTY_LIST;
+	    
+	   
+	    return new ResponseEntity<List<RalleyGroup_trade>>(entityList, HttpStatus.OK);
 	}
 
 	
