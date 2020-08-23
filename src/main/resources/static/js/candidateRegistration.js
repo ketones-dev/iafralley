@@ -24,6 +24,8 @@ let ralley_citySelectedValue = document.getElementById("ralleycitySelect");
 let stateSelectedValue = document.getElementById("stateSelect");
 let citySelectedValue = document.getElementById("citySelect");
 
+let proceed= document.getElementById("proceed");
+
 
 let grp_tradeSelect = document.getElementById("selectgroup");
 
@@ -67,14 +69,16 @@ window.addEventListener('load', function() {
 
 
 ralley_citySelectedValue.addEventListener("change", function(e) {
-	
+	document.getElementById("upload").style.display ="none";
 	 let data = ralley_citySelectedValue.options[ralley_citySelectedValue.selectedIndex].value;
+	 let validid=data;
 	 let citytext=ralley_citySelectedValue.options[ralley_citySelectedValue.selectedIndex].text;
 	 console.log(typeof data);
 	 if(data !== "")
 		 {
 		// Create Post
 		 document.getElementById("optedcityname").value = citytext;
+		 
 		 
 		 http.post('getralleyFormOnBasisOfAdminCities', {cityid : data} , function(err, post) {
 		  if(err) {
@@ -93,6 +97,7 @@ ralley_citySelectedValue.addEventListener("change", function(e) {
 		    else
 		    	{
 		    	
+		    	
 		    	http.post('getralleyDetailsOnBasisOfAdminCities', {cityid : data} , function(err, post) {
 			   		  if(err) {
 			   		    console.log(err);
@@ -101,24 +106,7 @@ ralley_citySelectedValue.addEventListener("change", function(e) {
 			   		    let ra=post;
 			   		 document.getElementById("ralleyoptdetails").innerHTML= ra;
 			   		 
-			   		if(cities === true){
-				    	http.post('getralleyValidationDetailsOnBasisOfAdminCities', {cityid : data} , function(err, post) {
-					   		  if(err) {
-					   		    console.log(err);
-					   		  } else {
-					   		    console.log(post);
-					   		    let data=JSON.parse(post);
-					   		 passed_exam.setAttribute("min",data.minpassing);
-					   		eng_passed_exam.setAttribute("min",data.engpassing);
-					   	 passed_exam.setAttribute("max","100");
-					   		eng_passed_exam.setAttribute("max","100");
-					   		dateOfBirth.setAttribute("min",data.mindob);
-					   		dateOfBirth.setAttribute("max",data.maxdob);
-					   		height.setAttribute("min",data.height);
-					   		 
-					   		  }
-					    	 });
-				    	}
+			   		
 			   		if(cities === true)
 			   			{
 			   			http.post('getralleyCreatedGroups', {cityid : data} , function(err, post) {
@@ -147,19 +135,38 @@ ralley_citySelectedValue.addEventListener("change", function(e) {
 					   		    	dropdown.options.add(opt);
 					   		    	}
 					   		    document.getElementById("grptrade").appendChild(dropdown);
-					   		    
+					   		 if(cities === true){
+					   		 http.post('getralleyValidationDetailsOnBasisOfAdminCities', {cityid : validid} , function(err, post) {
+						   		  if(err) {
+						   		    console.log(post);
+						   		  } else {
+						   		    console.log(post);
+						   		    let data=JSON.parse(post);
+						   		 passed_exam.setAttribute("min",data.minpassing);
+						   		eng_passed_exam.setAttribute("min",data.engpassing);
+						   	 passed_exam.setAttribute("max","100");
+						   		eng_passed_exam.setAttribute("max","100");
+						   		dateOfBirth.setAttribute("min",data.mindob);
+						   		dateOfBirth.setAttribute("max",data.maxdob);
+						   		height.setAttribute("min",data.height);
+						   		 
+						   		  }
+						    	 });
+					   		 }
 					   		    }
 					   		 
 					   		  }
 					    	 });
 			   			}
+			   		//always user at last as dependancy on first is there
+			   		
+			   		
 			   		 
 			   		  }
 			    	 });
 		    	
+		    			    	
 		    	
-		    	
-		    	toogleshowtable();
 		    	
 		    	
 		    	}
@@ -176,6 +183,42 @@ ralley_citySelectedValue.addEventListener("change", function(e) {
 	
 	
 });
+
+
+
+proceed.addEventListener("click",function(e){
+	
+	 let data1 = ralley_citySelectedValue.options[ralley_citySelectedValue.selectedIndex].value;
+	 let data2 = ralley_stateSelectedValue.options[ralley_stateSelectedValue.selectedIndex].value;
+	 if(data1 !== "" && data2 !== "")
+	 {toogleshowtable();
+	 document.getElementById("perRequest").style.display = 'none';
+	 document.getElementById("contextshow").style.display = 'none';
+	 
+	 }
+	 else if(data1 === "" && data2 === ""){
+		 toogleshowmsg();
+	   	  let messagetag="Please select State and city";
+	   	 
+	   	  document.getElementById("message").innerHTML = messagetag;
+	 }
+	 else if(data1 === ""){
+		 toogleshowmsg();
+	   	  let messagetag="Please select city";
+	   	 
+	   	  document.getElementById("message").innerHTML = messagetag;
+	 }
+	 else if(data2 === ""){
+		 toogleshowmsg();
+	   	  let messagetag="Please select State";
+	   	 
+	   	  document.getElementById("message").innerHTML = messagetag;
+	 }
+	 
+	
+});
+
+
 
 function toogleshowmsg()
 {
@@ -196,6 +239,7 @@ function toogleshowtable()
 
 ralley_stateSelectedValue.addEventListener("change", function(e) {
 	 console.log(this);
+	 document.getElementById("upload").style.display ="none";
 	 let data = ralley_stateSelectedValue.options[ralley_stateSelectedValue.selectedIndex].value;
 	 let statetext=ralley_stateSelectedValue.options[ralley_stateSelectedValue.selectedIndex].text;
 	    if(data !== "")
@@ -238,13 +282,21 @@ grp_tradeSelect.addEventListener("change", function(e) {
 	console.log(this);
 	let data =grp_tradeSelect.options[grp_tradeSelect.selectedIndex].value;
 	let text=grp_tradeSelect.options[grp_tradeSelect.selectedIndex].text;
+	
+	if(data === "")
+		{
+		document.getElementById("upload").style.display ="none";
+		return;
+		}
+	
 	if(data !== "")
 		{
+		document.getElementById("upload").style.display ="block";
 		document.getElementById("groupSelectedValue").value=data;
 		document.getElementById("groupSelectedText").value=text;
 		if(data === "1")
 			{
-			document.getElementById("diploma").style.display ="block";
+			document.getElementById("diploma").style.display ="inline-block";
 			document.getElementById("vocational").style.display ="none";
 			document.getElementById("othercourse").style.display ="none";
 			
@@ -252,13 +304,13 @@ grp_tradeSelect.addEventListener("change", function(e) {
 		else if(data === "2")
 			{
 			document.getElementById("diploma").style.display ="none";
-			document.getElementById("vocational").style.display ="block";
+			document.getElementById("vocational").style.display ="inline-block";
 			document.getElementById("othercourse").style.display ="none";
 			}
 		else{
 			document.getElementById("diploma").style.display ="none";
 			document.getElementById("vocational").style.display ="none";
-			document.getElementById("othercourse").style.display ="block";
+			document.getElementById("othercourse").style.display ="inline-block";
 			
 		}
 		console.log(document.getElementById("groupSelectedValue").value);

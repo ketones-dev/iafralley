@@ -16,6 +16,7 @@ let city_name=document.getElementById("cityname");
 let min_dob=document.getElementById("min_dob");
 let max_dob=document.getElementById("max_dob");
 let check_input=document.getElementsByName("ralleyForGroup");
+let NoOfDays=document.getElementById("noofDays");
 
 window.addEventListener('load', function() {
 	 let data = stateSelectedValue.options[stateSelectedValue.selectedIndex].value;
@@ -147,6 +148,8 @@ end_date.addEventListener("input",function(){
 
 	const diffDays = Math.round(Math.abs((firstDate - secondDate) / oneDay));
 	console.log(diffDays);
+	let dif=diffDays;
+	NoOfDays.value=dif+1;
 	addRow(diffDays,start_jsdate)
 	
 	

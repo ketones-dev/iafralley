@@ -1,7 +1,9 @@
 package com.cdac.iafralley.controllers;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -35,6 +37,7 @@ import com.cdac.iafralley.entity.RalleyDetails;
 import com.cdac.iafralley.services.RalleyCandidateDetailsService;
 import com.cdac.iafralley.services.RalleyDetailsService;
 import com.cdac.iafralley.user.RalleyDetailsDTO;
+import com.cdac.iafralley.util.RalleyIdGenrator;
 
 @Controller
 @RequestMapping("/Dashboard")
@@ -44,6 +47,8 @@ public class AdminController {
 	RalleyDetailsService rdservice;
 	@Autowired
 	RalleyCandidateDetailsService candidateService;
+	@Autowired
+	private RalleyIdGenrator ralleyIdGenrator;
 	
 	private final SimpleDateFormat DATE_TIME_FORMAT = new SimpleDateFormat("hh:mm:ss");
 	
@@ -102,9 +107,13 @@ public class AdminController {
 		//rd.setCity_id((long) 1);
 		//rd.setState_id((long) 1);
 		System.out.println(rd.toString());
+		LocalDate std=LocalDate.parse(convertDateToString(rd.getStart_date()));
+		String prefixvalue=String.valueOf(std.getMonth()).substring(0, 3).toUpperCase()+String.valueOf(std.getDayOfMonth())+String.valueOf(std.getYear()).substring(2)+rd.getCity_name().substring(0, 2).toUpperCase();
+		String custid=ralleyIdGenrator.RalleyCustomId(prefixvalue);
+		
 		RalleyDetails ralleyDetails = new RalleyDetails(rd.getRalley_id(),rd.getState_id(), rd.getCity_id(), rd.getRalley_details(),
 				rd.getVenue_details(), rd.getStart_date(), rd.getEnd_date(), rd.getNo_OfDays(), rd.getMin_dob(),
-				rd.getMax_dob(), rd.getMin_passing_percentage(), rd.getMin_eng_percentage(), rd.getMin_height(),rd.getCity_name(),rd.getState_name());
+				rd.getMax_dob(), rd.getMin_passing_percentage(), rd.getMin_eng_percentage(), rd.getMin_height(),rd.getCity_name(),rd.getState_name(),custid);
 
 		ralleyDetails.setRalleyForGroup(rd.getRalleyForGroup());
 		
@@ -220,6 +229,18 @@ public class AdminController {
 		    return new ResponseEntity<List<RalleyDetails>>(entityList, HttpStatus.OK);
 		}
 	 
-	
+	 public static String convertDateToString(Date strDate) {
+		    try {
+		      DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		       // you can change format of date
+		      String date = formatter.format(strDate);
+		      //Timestamp timeStampDate = new Timestamp(date.getTime());
+		    //  logger.info("in string"+date);
+		      return date;
+		    } catch (Exception e) {
+		      System.out.println("Exception :" + e);
+		      return null;
+		    }
+		  }
 
 }

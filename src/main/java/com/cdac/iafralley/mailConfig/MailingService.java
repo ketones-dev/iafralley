@@ -72,25 +72,25 @@ private static final Logger logger = LoggerFactory.getLogger(MailingService.clas
 			mimeMessageHelper.setTo(candidate.getEmailid());
 			//mimeMessageHelper.setText(message, message);for plane and html text
 			mimeMessageHelper.setSubject(subject);
-			
+			mimeMessageHelper.setText(message);
 			//3) create MimeBodyPart object and set your message text        
-            BodyPart messageBodyPart1 = new MimeBodyPart();     
-            messageBodyPart1.setText(message);          
+//            BodyPart messageBodyPart1 = new MimeBodyPart();     
+//            messageBodyPart1.setText(message);          
 
             //4) create new MimeBodyPart object and set DataHandler object to this object        
-            MimeBodyPart messageBodyPart2 = new MimeBodyPart();      
-            String filepath = FILE_PATH+candidate.getRalleyregistrationNo()+".pdf";//change accordingly     
-            DataSource source = new FileDataSource(filepath);    
-            messageBodyPart2.setDataHandler(new DataHandler(source));    
-            messageBodyPart2.setFileName(candidate.getRalleyregistrationNo()+".pdf");             
+//            MimeBodyPart messageBodyPart2 = new MimeBodyPart();      
+//            String filepath = FILE_PATH+candidate.getRalleyregistrationNo()+".pdf";//change accordingly     
+//            DataSource source = new FileDataSource(filepath);    
+//            messageBodyPart2.setDataHandler(new DataHandler(source));    
+//            messageBodyPart2.setFileName(candidate.getRalleyregistrationNo()+".pdf");             
 
             //5) create Multipart object and add MimeBodyPart objects to this object        
-            Multipart multipart = new MimeMultipart();    
-            multipart.addBodyPart(messageBodyPart1);     
-            multipart.addBodyPart(messageBodyPart2);      
+//            Multipart multipart = new MimeMultipart();    
+//            multipart.addBodyPart(messageBodyPart1);     
+//            multipart.addBodyPart(messageBodyPart2);      
 
             //6) set the multiplart object to the message object    
-            mimeMessage.setContent(multipart );        
+//            mimeMessage.setContent(multipart );        
 			
 			
 			

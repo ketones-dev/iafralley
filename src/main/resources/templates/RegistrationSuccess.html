@@ -163,7 +163,7 @@ hr {
 									<li><a href="index.html"><span
 											class="glyphicon glyphicon-home"></span> Home/ </a></li>
 
-									<li>Ralley Registration</li>
+									<li>Rally Registration</li>
 								</ul>
 							</nav>
 
@@ -177,19 +177,19 @@ hr {
 			<div class="jumbotron jumbotron-fluid " style="background-image:linear-gradient(-155deg, #fff 32%, #5899e2 187%);">
   <div class="container">
 
-				<h1 style="color:black;">Thank u for Registring</h1> 
+				<h1 style="color:black;">Thank you for Registering</h1> 
 				<h3 style="color:black;">A email has been sent at  your registered mail
-				id <p style="color:black;" th:text="'content: ' + ${candidateDetails.emailid}" /> 
-				you can  download Provisional admit card by clicking Download button also.	</h3>
+				id <p style="color:black;" th:text="': ' + ${candidateDetails.emailid}" /> 
+				<!-- you can  download Provisional admit card by clicking Download button also. -->	</h3>
 				<!-- <p th:text="'id: ' + ${candidateDetails.name}" />
 				<p th:text="'content: ' + ${candidateDetails.fathername}" />
 				<p th:text="'content: ' + ${candidateDetails.emailid}" />
 				<p th:text="'content: ' + ${candidateDetails.ralleyregistrationNo}" /> -->
 
 				<!-- <a th:href="@{'/pdf/fileName=HelloWorld'">Download</a> -->
-				<a class="btn btn-success"
+				<!-- <a class="btn btn-success"
 					th:href="@{/pdf(fileName=${candidateDetails.ralleyregistrationNo})}">
-					Download Provisional Admit Card</a>
+					Download Provisional Admit Card</a> -->
 
 </div>
 </div>

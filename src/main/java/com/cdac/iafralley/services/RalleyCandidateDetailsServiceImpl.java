@@ -371,7 +371,7 @@ public class RalleyCandidateDetailsServiceImpl implements RalleyCandidateDetails
 		
 		for(RalleyDetails p:rd)
 		{
-			details +="<h2>Ralley details: </h2><h3>"+p.getRalley_details()+"</h2><h3>Conducting Dates: "+p.getStart_date()+" to "+p.getEnd_date()+"</h3><h4>"+p.getVenue_details()+"</h4><hr>";
+			details +="<h2>Rally details: </h2><h3>"+p.getRalley_details()+"</h2><h3>Conducting Dates: "+p.getStart_date()+" to "+p.getEnd_date()+"</h3><h4>"+p.getVenue_details()+"</h4><hr>";
 		}
 		
 		logger.info(details);

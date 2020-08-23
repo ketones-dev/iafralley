@@ -30,15 +30,39 @@
 	<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
 	<div
 		class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-		<h1 class="h2">Dashboard</h1>
+		<h1 class="h2">Create Rally</h1>
 	</div>
-	<div class="container">
-		<h3>Add Ralley</h3>
+	
+	
+	<div>
+	
+	<!-- Tab navigation -->
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link custom active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Rally Details</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link custom" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Criteria Details</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link custom" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Rally Schedule</a>
+  </li>
+</ul>
+
+<div class="container-fluid" style="margin-top:2%;">
+		<h3></h3>
 		<div class="card">
 			<div class="card-body">
 				<div class="col-md-12">
-					<form action="#" th:action="@{/Dashboard/CreateRalley}"
+				<form action="#" th:action="@{/Dashboard/CreateRalley}"
 						th:object="${ralleyDetails}" method="post" id="form">
+
+<!-- Tab content -->
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+    <h3>Add Rally Details</h3>
+    <hr>
+    
 						<div class="row">
 						<div class="form-group  col-md-12">
 						
@@ -52,14 +76,14 @@
 
 							</div>
 							<div class="form-group col-md-12">
-								<label for="ralley_details" class="col-form-label">Name</label>
+								<label for="ralley_details" class="col-form-label">Rally Name</label>
 								<input type="text" th:field="*{ralley_details}"
 									class="form-control" id="name" placeholder="Name or Details" required>
 								<span th:if="${#fields.hasErrors('ralley_details')}"
 									th:errors="*{ralley_details}" class="text-danger"></span>
 							</div>
 							<div class="form-group col-md-12">
-								<label for="venue_details" class="col-form-label">Venue
+								<label for="venue_details" class="col-form-label">Rally Venue
 									Details</label> <input type="text" th:field="*{venue_details}"
 									class="form-control" id="venue_details"
 									placeholder="Venue Details" required> <span
@@ -67,7 +91,51 @@
 									th:errors="*{venue_details}" class="text-danger"></span>
 							</div>
 
+							
+
 							<div class="form-group col-md-6">
+								<label for="state" class="col-form-label">State</label> <select
+									th:field="*{state_id}" id="stateSelect" class="form-control"
+									required="true">
+									<option th:value="''">---Select State----</option>
+									<option th:each="state : ${allStates}"
+										th:value="${state.state_id}" th:text="${state.state}"></option>
+								</select>
+							</div>
+							<input type="hidden" th:field="*{state_name}" id="statename">
+							<input type="hidden" th:field="*{city_name}" id="cityname">
+							<input type="hidden" th:field="*{ralley_id}" id="ralley_id" />
+							<input type="hidden" th:field="*{no_OfDays}" id="noofDays" />
+							
+							<input type="hidden" th:value="${ralleyDetails.city_id}" id="optcity">
+							
+							
+
+							<div class="form-group col-md-6">
+								<label for="city" class="col-form-label">City</label> <select
+									th:field="*{city_id}" id="citySelect" class="form-control" required="true">
+									<option value="">---Select City----</option>
+
+
+								</select>
+							</div>
+
+
+
+							
+<a class="nexttab btn btn-success">Next</a>
+
+						</div>
+
+
+						
+						
+  </div>
+  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+    <h3>Criteria Details</h3>
+    <hr>
+    <div class="row">
+    <div class="form-group col-md-6">
 								<label for="minDobDate" class="col-form-label">Min Date
 									of Birth</label> <input type="date" th:field="*{min_dob}"
 									class="form-control" id="min_dob" placeholder="Enter Date" required>
@@ -110,35 +178,19 @@
 									th:if="${#fields.hasErrors('min_height')}"
 									th:errors="*{min_height}" class="text-danger"></span>
 							</div>
-
-							<div class="form-group col-md-6">
-								<label for="state" class="col-form-label">Select State</label> <select
-									th:field="*{state_id}" id="stateSelect" class="form-control"
-									required="true">
-									<option th:value="''">---Select State----</option>
-									<option th:each="state : ${allStates}"
-										th:value="${state.state_id}" th:text="${state.state}"></option>
-								</select>
-							</div>
-							<input type="hidden" th:field="*{state_name}" id="statename">
-							<input type="hidden" th:field="*{city_name}" id="cityname">
-							<input type="hidden" th:field="*{ralley_id}" id="ralley_id" />
-							<input type="hidden" th:value="${ralleyDetails.city_id}" id="optcity">
 							
-							
-
-							<div class="form-group col-md-6">
-								<label for="city" class="col-form-label">Select City</label> <select
-									th:field="*{city_id}" id="citySelect" class="form-control" required="true">
-									<option value="">---Select City----</option>
-
-
-								</select>
+							<div class="row">
+							<div class="form-group col-md-4">
+							<a class="prevtab btn btn-success">Prev</a></div>
+							<div class="form-group col-md-4"><a class="nexttab btn btn-success">Next</a></div>
 							</div>
-
-
-
-							<div class="form-group col-md-6">
+							</div>
+  </div>
+  <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+    <h3>Rally Schedule</h3>
+    <hr>
+   <div class="row">
+   <div class="form-group col-md-6">
 								<label for="startDate" class="col-form-label">Start Date</label>
 								<input type="date" th:field="*{start_date}" class="form-control"
 									id="start_date" placeholder="Enter Start Date" required> <span
@@ -217,23 +269,37 @@
 									</table>
 								</div>
 							</div>
-
-
-
-						</div>
-
-
-						<div class="col-md-6">
-							<input type="submit" class="btn btn-primary" value="Add Ralley">
+   
+   
+   <div class="col-md-6">
+							<input type="submit" class="btn btn-primary" value="Add Rally">
 						</div>
 
 						<div class="form-group col-md-8"></div>
-						</form>
-				</div>
+						
+   </div>
+   <a class="prevtab btn btn-success">Prev</a>
+  </div>
+</div>
+
+<!-- Tab carousel -->
+
+
+</form>
+</div>
 				
 			</div>
 		</div>
 	</div>
+	
+	
+	</div>
+	
+	
+	
+	
+					
+				
 	
 	</main>
 
@@ -255,7 +321,48 @@
       feather.replace()
     </script>
 
+<script>
+$(document).ready(function() {
+	function bootstrapTabControl(){
+		  var i, items = $('.custom'), pane = $('.tab-pane');
+		  // next
+		  $('.nexttab').on('click', function(){
+		      for(i = 0; i < items.length; i++){
+		          if($(items[i]).hasClass('active') == true){
+		              break;
+		          }
+		      }
+		      if(i < items.length - 1){
+		          // for tab
+		          $(items[i]).removeClass('active');
+		          $(items[i+1]).addClass('active');
+		          // for pane
+		          $(pane[i]).removeClass('show active');
+		          $(pane[i+1]).addClass('show active');
+		      }
 
+		  });
+		  // Prev
+		  $('.prevtab').on('click', function(){
+		      for(i = 0; i < items.length; i++){
+		          if($(items[i]).hasClass('active') == true){
+		              break;
+		          }
+		      }
+		      if(i != 0){
+		          // for tab
+		          $(items[i]).removeClass('active');
+		          $(items[i-1]).addClass('active');
+		          // for pane
+		          $(pane[i]).removeClass('show active');
+		          $(pane[i-1]).addClass('show active');
+		      }
+		  });
+		}
+		bootstrapTabControl();
+
+});
+</script>
 </body>
 
 </html>

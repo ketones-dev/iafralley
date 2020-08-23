@@ -31,5 +31,8 @@ public interface RalleyDetailsDAO extends JpaRepository<RalleyDetails, Long> {
 	@Query(nativeQuery = true,value = "select distinct on(city_id) * from ralley_details")
 	public List<RalleyDetails> findDistinctCity_id();
 	
+	@Query("select max(SUBSTRING(a.ralley_cust_id,10,5)) from RalleyDetails a")
+	public String maxCount();
+	
 
 }

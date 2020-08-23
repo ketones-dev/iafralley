@@ -34,6 +34,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.cdac.iafralley.entity.RalleyCandidateDetails;
 import com.cdac.iafralley.entity.RalleyCities;
 import com.cdac.iafralley.entity.RalleyGroup_trade;
+import com.cdac.iafralley.mailConfig.MailingService;
 import com.cdac.iafralley.services.RalleyCandidateDetailsService;
 
 
@@ -163,21 +164,21 @@ public class RalleyRegistrationFormController {
 			//PDF and mail genration code
 			// modelAndView.addObject("allUsers", userService.getAllUsers());
 		  //modelAndView.addObject("candidateDetails",candidateDetails );
+			
 		  //RegisterdCandidatePDFReport.createPDF(candidateDetails,FILE_PATH);
-			/*
-			 * String to=candidateDetails.getEmailid(); String
-			 * subject="Ralley Registration Conformation"; String
-			 * message="Thank u for registring and Here is your register detail application form"
-			 * ;
-			 * 
-			 * 
-			 * try {
-			 * 
-			 * //MailingService.sendMail(mailserver, from, password, candidateDetails,
-			 * subject, message,FILE_PATH); } catch(Exception e) { e.printStackTrace();
-			 * 
-			 * }
-			 */
+			
+			  String to=candidateDetails.getEmailid(); 
+			  String subject="Ralley Registration Conformation"; 
+			  String message="Thank u for registring and Here is your register detail application form";
+			  
+			  
+			  try {
+			  
+			  MailingService.sendMail(mailserver, from, password, candidateDetails,
+			  subject, message,FILE_PATH); } catch(Exception e) { e.printStackTrace();
+			  
+			  }
+			 
 		
 		 redirectAttributes.addFlashAttribute("candidateDetails", candidateDetails);
 		  modelAndView.setViewName("redirect:/RegistrationSuccess");

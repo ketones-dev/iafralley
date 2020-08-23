@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.cdac.iafralley.Dao.RalleyCandidateDetailsDAO;
+import com.cdac.iafralley.Dao.RalleyDetailsDAO;
 
 @Component
 public class RalleyIdGenrator implements RalleyIdGenratorInterface{
@@ -15,6 +16,9 @@ public class RalleyIdGenrator implements RalleyIdGenratorInterface{
 	//auto wired candidatedetails doa to set value and get city pref
 	@Autowired
 	RalleyCandidateDetailsDAO ralleyCandidateDetailsDAO;
+	
+	@Autowired
+	RalleyDetailsDAO ralleyDetailsDAO;
 	
 	
 	private String year_cycle="20";
@@ -50,6 +54,31 @@ public class RalleyIdGenrator implements RalleyIdGenratorInterface{
 	    String output = Long.toString(num);
 	    while (output.length() < digits) output = "0" + output;
 	    return output;
+	}
+
+	@Override
+	public String RalleyCustomId(String preFixValue) {
+		String rregno=null;
+		
+		//get count of value
+		String rcount=ralleyDetailsDAO.maxCount();
+		
+		// checking it is first time registration number is genrated
+		if(rcount == null)
+		{
+			rregno=preFixValue+R_NO_FIRST;
+		}
+		
+		// else get max count from db for such city and state of such day registerd count-acutal intake count
+		// =0 then alloted next day registration count and add 1 to its id
+		//FCFS
+		else {
+			String rid= ConvertLongToStringwithPaddedzero(Long.parseLong(rcount)+1,5);
+			rregno=preFixValue+rid;
+		}
+		
+		
+		return rregno;
 	}
 	
 	
